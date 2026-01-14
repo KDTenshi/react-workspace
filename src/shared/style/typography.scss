@@ -1,1 +1,38 @@
-// font-family: "Inter", sans-serif;
+@mixin _heading_base($size, $weight) {
+  font-family: "Montserrat", sans-serif;
+  font-weight: $weight;
+  font-size: $size;
+}
+
+@mixin heading_1() {
+  @include _heading_base(35px, 800);
+}
+
+@mixin heading_2() {
+  @include _heading_base(30px, 700);
+}
+
+@mixin heading_3() {
+  @include _heading_base(25px, 600);
+}
+
+@mixin heading_4() {
+  @include _heading_base(20px, 500);
+}
+
+@mixin _body_base($size, $weight) {
+  font-family: "Inter", sans-serif;
+  font-weight: $weight;
+}
+
+@mixin body_1() {
+  @include _body_base(20px, 400);
+}
+
+@mixin body_2() {
+  @include _body_base(15px, 400);
+}
+
+@mixin body_3() {
+  @include _body_base(10px, 300);
+}

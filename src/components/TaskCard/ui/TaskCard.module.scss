@@ -18,20 +18,20 @@
 }
 
 .Title {
-  font-family: "Inter", sans-serif;
-  font-size: 20px;
+  @include t.heading_4();
+
   color: c.$BLACK;
 }
 
 .Body {
-  font-family: "Inter", sans-serif;
-  font-size: 15px;
+  @include t.body_2();
+
   color: c.$GRAY_DARK;
 }
 
 .Date {
-  font-family: "Inter", sans-serif;
+  @include t.body_2();
+
   color: c.$GRAY_DARK;
-  font-size: 15px;
   text-align: right;
 }

@@ -9,9 +9,9 @@
 }
 
 .Title {
-  font-size: 20px;
+  @include t.heading_3();
+
   color: c.$BLACK;
-  font-family: "Inter", sans-serif;
   font-weight: 500;
   margin-bottom: 10px;
 }
@@ -27,7 +27,8 @@
 }
 
 .Empty {
-  font-family: "Inter", sans-serif;
+  @include t.body_1();
+
   text-align: center;
   color: c.$GRAY_DARK;
 }
