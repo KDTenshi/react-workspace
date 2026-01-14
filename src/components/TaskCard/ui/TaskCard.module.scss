@@ -1,0 +1,37 @@
+@use "../../../shared/style/colors.scss" as c;
+@use "../../../shared/style/typography.scss" as t;
+
+.Task {
+  background: c.$WHITE;
+  border: 1px solid c.$GRAY_LIGHT;
+  border-radius: 5px;
+  padding: 10px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.25s;
+
+  &:hover {
+    box-shadow: 0 0 10px rgba($color: c.$GRAY_DARK, $alpha: 0.5);
+  }
+}
+
+.Title {
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  color: c.$BLACK;
+}
+
+.Body {
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  color: c.$GRAY_DARK;
+}
+
+.Date {
+  font-family: "Inter", sans-serif;
+  color: c.$GRAY_DARK;
+  font-size: 15px;
+  text-align: right;
+}

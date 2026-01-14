@@ -1,0 +1,39 @@
+@use "../../../shared/style/colors.scss" as c;
+@use "../../../shared/style/typography.scss" as t;
+
+.Header {
+  width: 100%;
+  padding: 25px 50px;
+  background: c.$WHITE;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Logo {
+  font-family: "Inter", sans-serif;
+  font-size: 25px;
+  font-weight: 800;
+  text-transform: uppercase;
+
+  &::first-letter {
+    color: c.$RED;
+  }
+}
+
+.Button {
+  font-size: 20px;
+  font-family: "Inter", sans-serif;
+  padding: 5px 15px;
+  background: c.$WHITE;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  transition: all 0.25s;
+  border-radius: 10px;
+
+  &:hover {
+    background: c.$BLACK;
+    color: c.$WHITE;
+  }
+}

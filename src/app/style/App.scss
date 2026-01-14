@@ -1,5 +1,5 @@
 @use "../../shared/style/colors.scss" as c;
-@import "../../shared/style/typography.scss";
+@use "../../shared/style/typography.scss";
 
 * {
   margin: 0;
@@ -9,6 +9,8 @@
 
 .App {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   background: c.$BLACK;
+  display: flex;
+  flex-direction: column;
 }

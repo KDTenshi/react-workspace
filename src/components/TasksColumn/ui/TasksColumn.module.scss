@@ -1,0 +1,33 @@
+@use "../../../shared/style/colors.scss" as c;
+@use "../../../shared/style/typography.scss" as t;
+
+.Column {
+  background: c.$WHITE;
+  width: 100%;
+  padding: 15px 25px;
+  border-radius: 10px;
+}
+
+.Title {
+  font-size: 20px;
+  color: c.$BLACK;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.Tasks {
+  height: 65vh;
+  display: flex;
+  flex-direction: column;
+  padding: 15px 10px;
+  background: c.$GRAY_WHITE;
+  border: 1px solid c.$GRAY_LIGHT;
+  border-radius: 10px;
+}
+
+.Empty {
+  font-family: "Inter", sans-serif;
+  text-align: center;
+  color: c.$GRAY_DARK;
+}
