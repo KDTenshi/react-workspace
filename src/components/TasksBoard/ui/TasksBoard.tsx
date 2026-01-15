@@ -5,9 +5,9 @@ import { TasksColumn } from "../../TasksColumn";
 const TasksBoard: FC = () => {
   return (
     <div className={style.Board}>
-      <TasksColumn />
-      <TasksColumn />
-      <TasksColumn />
+      <TasksColumn type={"todo"} />
+      <TasksColumn type={"doing"} />
+      <TasksColumn type={"done"} />
     </div>
   );
 };

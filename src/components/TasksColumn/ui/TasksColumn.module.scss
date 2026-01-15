@@ -6,6 +6,7 @@
   width: 100%;
   padding: 15px 25px;
   border-radius: 10px;
+  box-shadow: 0 0 15px c.$GRAY_LIGHT;
 }
 
 .Title {
@@ -19,11 +20,15 @@
 .Tasks {
   height: 65vh;
   display: flex;
+  gap: 10px;
   flex-direction: column;
   padding: 15px 10px;
   background: c.$GRAY_WHITE;
   border: 1px solid c.$GRAY_LIGHT;
+  overflow-y: auto;
   border-radius: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: c.$GRAY_LIGHT c.$GRAY_WHITE;
 }
 
 .Empty {

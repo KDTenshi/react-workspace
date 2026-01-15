@@ -8,6 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid c.$GRAY_LIGHT;
 }
 
 .Logo {
@@ -25,14 +26,15 @@
 
   padding: 5px 15px;
   background: c.$WHITE;
-  border: 0;
+  border: 1px solid transparent;
   outline: 0;
   cursor: pointer;
   transition: all 0.25s;
   border-radius: 10px;
+  color: c.$GRAY_DARK;
 
   &:hover {
-    background: c.$BLACK;
-    color: c.$WHITE;
+    background: c.$GRAY_WHITE;
+    border-color: c.$GRAY_LIGHT;
   }
 }
