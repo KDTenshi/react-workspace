@@ -40,6 +40,19 @@
   border-radius: 5px;
 }
 
+.Textarea {
+  @include t.body_1();
+
+  background: c.$GRAY_WHITE;
+  border: 1px solid c.$GRAY_LIGHT;
+  outline: 0;
+  color: c.$BLACK;
+  padding: 5px 15px;
+  border-radius: 5px;
+  resize: none;
+  height: 25vh;
+}
+
 .Buttons {
   display: flex;
   align-items: center;

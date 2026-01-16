@@ -5,6 +5,7 @@ import { addTask, hideForm } from "../../../shared/store/tasksSlice";
 
 const AddTaskPopup: FC = () => {
   const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
 
   const dispatch = useAppDispatch();
 
@@ -22,9 +23,10 @@ const AddTaskPopup: FC = () => {
     e.preventDefault();
 
     const taskTitle = title.trim();
+    const taskBody = body.trim();
 
     if (taskTitle) {
-      dispatch(addTask({ title: taskTitle }));
+      dispatch(addTask({ title: taskTitle, body: taskBody }));
       handleHidePopup();
     }
   };
@@ -40,6 +42,12 @@ const AddTaskPopup: FC = () => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
+        <textarea
+          className={style.Textarea}
+          placeholder="Task body..."
+          value={body}
+          onChange={(e) => setBody(e.target.value)}
+        ></textarea>
         <div className={style.Buttons}>
           <button className={style.Button} type="button" onClick={handleHidePopup}>
             Cancel

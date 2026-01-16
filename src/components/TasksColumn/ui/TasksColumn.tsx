@@ -3,6 +3,7 @@ import style from "./TasksColumn.module.scss";
 import { TaskCard } from "../../TaskCard";
 import type { TColumnType } from "../../../shared/types/types";
 import { useAppSelector } from "../../../app/store/appStore";
+import { useSortable } from "@dnd-kit/sortable";
 
 interface TasksColumnProps {
   type: TColumnType;
@@ -15,12 +16,13 @@ const columnTitles: { [key in TColumnType]: string } = {
 };
 
 const TasksColumn: FC<TasksColumnProps> = ({ type }) => {
+  const { setNodeRef } = useSortable({ id: type, data: { type: "column" } });
   const tasksIDs = useAppSelector((state) => state.tasks.columns[type]);
 
   return (
     <div className={style.Column}>
       <h2 className={style.Title}>{columnTitles[type]}</h2>
-      <div className={style.Tasks}>
+      <div className={style.Tasks} ref={setNodeRef}>
         {tasksIDs.length === 0 && <p className={style.Empty}>No tasks here yet</p>}
         {tasksIDs.map((taskID) => (
           <TaskCard taskID={taskID} key={taskID} />
