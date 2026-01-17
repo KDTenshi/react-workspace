@@ -17,6 +17,17 @@
   }
 }
 
+.Content {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+
+.Info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .Title {
   @include t.heading_4();
 
@@ -49,6 +60,32 @@
 
 .High {
   @include priority(c.$RED_LIGHT);
+}
+
+.Controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: end;
+  gap: 10px;
+}
+
+.Button {
+  @include t.body_2();
+
+  padding: 5px 15px;
+  background: c.$WHITE;
+  border: 1px solid transparent;
+  outline: 0;
+  cursor: pointer;
+  transition: all 0.25s;
+  border-radius: 10px;
+  color: c.$GRAY_DARK;
+
+  &:hover {
+    background: c.$GRAY_WHITE;
+    border-color: c.$GRAY_LIGHT;
+  }
 }
 
 .Date {

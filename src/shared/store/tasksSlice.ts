@@ -41,6 +41,28 @@ export const tasksSlice = createSlice({
       state.columns.todo.push(newTask.id);
       state.list[newTask.id] = newTask;
     },
+    editTask: (
+      state,
+      action: PayloadAction<{ taskID: string; title: string; body: string; priority: TTaskPriority }>,
+    ) => {
+      const { taskID, title, body, priority } = action.payload;
+
+      const task = state.list[taskID];
+
+      console.log(task);
+
+      task.title = title;
+      task.body = body.length > 0 ? body : "No body...";
+      task.priority = priority;
+    },
+    deleteTask: (state, action: PayloadAction<{ taskID: string }>) => {
+      const { taskID } = action.payload;
+
+      const toDelete = state.list[taskID];
+
+      state.columns[toDelete.column] = state.columns[toDelete.column].filter((id) => id !== taskID);
+      delete state.list[taskID];
+    },
     showForm: (state) => {
       state.isFormShown = true;
     },
@@ -90,6 +112,8 @@ export const tasksSlice = createSlice({
 
 export const {
   addTask,
+  editTask,
+  deleteTask,
   showForm,
   hideForm,
   setDraggingTaskID,

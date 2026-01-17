@@ -1,0 +1,127 @@
+@use "../../../shared/style/colors.scss" as c;
+@use "../../../shared/style/typography.scss" as t;
+
+.Wrapper {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba($color: c.$BLACK, $alpha: 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Popup {
+  background: c.$WHITE;
+  width: 50vw;
+  border-radius: 15px;
+  padding: 15px 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.Title {
+  @include t.heading_3();
+
+  color: c.$BLACK;
+}
+
+.Input {
+  @include t.body_1();
+
+  background: c.$GRAY_WHITE;
+  border: 1px solid c.$GRAY_LIGHT;
+  outline: 0;
+  color: c.$BLACK;
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+
+.Textarea {
+  @include t.body_1();
+
+  background: c.$GRAY_WHITE;
+  border: 1px solid c.$GRAY_LIGHT;
+  outline: 0;
+  color: c.$BLACK;
+  padding: 5px 15px;
+  border-radius: 5px;
+  resize: none;
+  height: 25vh;
+}
+
+.Priorities {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.Subtitle {
+  @include t.body_1();
+
+  color: c.$GRAY_DARK;
+}
+
+.Picker {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+}
+
+@mixin priority($color) {
+  @include t.body_2();
+
+  background: rgba($color: $color, $alpha: 0.25);
+  border: 1px solid $color;
+  width: max-content;
+  text-transform: uppercase;
+  padding: 5px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: 0;
+
+  &.Active {
+    background: $color;
+  }
+}
+
+.Low {
+  @include priority(c.$GREEN_LIGHT);
+}
+
+.Moderate {
+  @include priority(c.$YELLOW_LIGHT);
+}
+
+.High {
+  @include priority(c.$RED_LIGHT);
+}
+
+.Buttons {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 15px;
+}
+
+.Button {
+  @include t.body_1();
+
+  padding: 5px 15px;
+  background: c.$WHITE;
+  border: 1px solid transparent;
+  outline: 0;
+  cursor: pointer;
+  transition: all 0.25s;
+  border-radius: 10px;
+  color: c.$GRAY_DARK;
+
+  &:hover {
+    background: c.$GRAY_WHITE;
+    border-color: c.$GRAY_LIGHT;
+  }
+}
