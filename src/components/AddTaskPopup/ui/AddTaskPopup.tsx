@@ -2,10 +2,12 @@ import { useState, type FC } from "react";
 import style from "./AddTaskPopup.module.scss";
 import { useAppDispatch } from "../../../app/store/appStore";
 import { addTask, hideForm } from "../../../shared/store/tasksSlice";
+import type { TTaskPriority } from "../../../shared/types/types";
 
 const AddTaskPopup: FC = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const [priority, setPriority] = useState<TTaskPriority>("low");
 
   const dispatch = useAppDispatch();
 
@@ -26,7 +28,7 @@ const AddTaskPopup: FC = () => {
     const taskBody = body.trim();
 
     if (taskTitle) {
-      dispatch(addTask({ title: taskTitle, body: taskBody }));
+      dispatch(addTask({ title: taskTitle, body: taskBody, priority }));
       handleHidePopup();
     }
   };
@@ -48,6 +50,32 @@ const AddTaskPopup: FC = () => {
           value={body}
           onChange={(e) => setBody(e.target.value)}
         ></textarea>
+        <div className={style.Priorities}>
+          <p className={style.Subtitle}>Set priority</p>
+          <div className={style.Picker}>
+            <button
+              className={priority === "low" ? [style.Low, style.Active].join(" ") : style.Low}
+              type="button"
+              onClick={() => setPriority("low")}
+            >
+              LOW
+            </button>
+            <button
+              className={priority === "moderate" ? [style.Moderate, style.Active].join(" ") : style.Moderate}
+              type="button"
+              onClick={() => setPriority("moderate")}
+            >
+              MODERATE
+            </button>
+            <button
+              className={priority === "high" ? [style.High, style.Active].join(" ") : style.High}
+              type="button"
+              onClick={() => setPriority("high")}
+            >
+              HIGH
+            </button>
+          </div>
+        </div>
         <div className={style.Buttons}>
           <button className={style.Button} type="button" onClick={handleHidePopup}>
             Cancel

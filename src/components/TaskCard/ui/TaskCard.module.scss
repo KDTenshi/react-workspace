@@ -29,6 +29,28 @@
   color: c.$GRAY_DARK;
 }
 
+@mixin priority($color) {
+  @include t.body_2();
+
+  background: $color;
+  width: max-content;
+  text-transform: uppercase;
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+
+.Low {
+  @include priority(c.$GREEN_LIGHT);
+}
+
+.Moderate {
+  @include priority(c.$YELLOW_LIGHT);
+}
+
+.High {
+  @include priority(c.$RED_LIGHT);
+}
+
 .Date {
   @include t.body_2();
 

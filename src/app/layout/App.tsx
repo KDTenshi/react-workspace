@@ -4,15 +4,18 @@ import { Header } from "../../components/Header";
 import { TasksBoard } from "../../components/TasksBoard";
 import { AddTaskPopup } from "../../components/AddTaskPopup";
 import { useAppSelector } from "../store/appStore";
+import { TaskInfo } from "../../components/TaskInfo";
 
 const App: FC = () => {
   const isFormShown = useAppSelector((state) => state.tasks.isFormShown);
+  const selectedTaskID = useAppSelector((state) => state.tasks.selectedTaskID);
 
   return (
     <div className="App">
       <Header />
       <TasksBoard />
       {isFormShown && <AddTaskPopup />}
+      {selectedTaskID && <TaskInfo taskID={selectedTaskID} />}
     </div>
   );
 };

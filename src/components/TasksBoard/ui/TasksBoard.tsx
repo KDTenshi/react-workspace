@@ -1,21 +1,34 @@
 import type { FC } from "react";
 import style from "./TasksBoard.module.scss";
 import { TasksColumn } from "../../TasksColumn";
-import { DndContext, DragOverlay, pointerWithin, type DragOverEvent, type DragStartEvent } from "@dnd-kit/core";
+import {
+  DndContext,
+  DragOverlay,
+  MouseSensor,
+  pointerWithin,
+  useSensor,
+  useSensors,
+  type DragOverEvent,
+  type DragStartEvent,
+} from "@dnd-kit/core";
 import { useAppDispatch, useAppSelector } from "../../../app/store/appStore";
-import { changeTaskColumn, changeTaskPosition, setSelectedTaskID } from "../../../shared/store/tasksSlice";
+import { changeTaskColumn, changeTaskPosition, setDraggingTaskID } from "../../../shared/store/tasksSlice";
 import type { TColumnType } from "../../../shared/types/types";
 import { TaskCard } from "../../TaskCard";
 
 const TasksBoard: FC = () => {
   const dispatch = useAppDispatch();
-  const selectedTaskID = useAppSelector((state) => state.tasks.selectedTaskID);
+  const draggingTaskID = useAppSelector((state) => state.tasks.draggingTaskID);
 
   const handleDragStart = (e: DragStartEvent) => {
     const taskID = e.active.id as string;
 
-    dispatch(setSelectedTaskID({ taskID }));
+    dispatch(setDraggingTaskID({ taskID }));
   };
+
+  const mouseSensor = useSensor(MouseSensor, { activationConstraint: { distance: 10 } });
+
+  const sensors = useSensors(mouseSensor);
 
   const handleDragOver = (e: DragOverEvent) => {
     const active = e.active;
@@ -47,12 +60,13 @@ const TasksBoard: FC = () => {
   };
 
   const handleDragEnd = () => {
-    dispatch(setSelectedTaskID({ taskID: null }));
+    dispatch(setDraggingTaskID({ taskID: null }));
   };
 
   return (
     <div className={style.Board}>
       <DndContext
+        sensors={sensors}
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
@@ -61,7 +75,7 @@ const TasksBoard: FC = () => {
         <TasksColumn type={"todo"} />
         <TasksColumn type={"doing"} />
         <TasksColumn type={"done"} />
-        <DragOverlay>{selectedTaskID && <TaskCard taskID={selectedTaskID} />}</DragOverlay>
+        <DragOverlay>{draggingTaskID && <TaskCard taskID={draggingTaskID} />}</DragOverlay>
       </DndContext>
     </div>
   );

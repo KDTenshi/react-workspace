@@ -1,11 +1,12 @@
 import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
-import type { TColumnType, TTask } from "../types/types";
+import type { TColumnType, TTask, TTaskPriority } from "../types/types";
 import { arrayMove } from "@dnd-kit/sortable";
 
 type TasksState = {
   list: { [key: string]: TTask };
   columns: { [key in TColumnType]: string[] };
   isFormShown: boolean;
+  draggingTaskID: string | null;
   selectedTaskID: string | null;
 };
 
@@ -17,6 +18,7 @@ const initialState: TasksState = {
     done: [],
   },
   isFormShown: false,
+  draggingTaskID: null,
   selectedTaskID: null,
 };
 
@@ -24,8 +26,8 @@ export const tasksSlice = createSlice({
   name: "tasks",
   initialState,
   reducers: {
-    addTask: (state, action: PayloadAction<{ title: string; body: string }>) => {
-      const { title, body } = action.payload;
+    addTask: (state, action: PayloadAction<{ title: string; body: string; priority: TTaskPriority }>) => {
+      const { title, body, priority } = action.payload;
 
       const newTask: TTask = {
         id: nanoid(),
@@ -33,6 +35,7 @@ export const tasksSlice = createSlice({
         body: body.length > 0 ? body : "No body...",
         date: Date.now(),
         column: "todo",
+        priority,
       };
 
       state.columns.todo.push(newTask.id);
@@ -43,6 +46,11 @@ export const tasksSlice = createSlice({
     },
     hideForm: (state) => {
       state.isFormShown = false;
+    },
+    setDraggingTaskID: (state, action: PayloadAction<{ taskID: string | null }>) => {
+      const { taskID } = action.payload;
+
+      state.draggingTaskID = taskID;
     },
     setSelectedTaskID: (state, action: PayloadAction<{ taskID: string | null }>) => {
       const { taskID } = action.payload;
@@ -80,5 +88,12 @@ export const tasksSlice = createSlice({
   },
 });
 
-export const { addTask, showForm, hideForm, setSelectedTaskID, changeTaskColumn, changeTaskPosition } =
-  tasksSlice.actions;
+export const {
+  addTask,
+  showForm,
+  hideForm,
+  setDraggingTaskID,
+  setSelectedTaskID,
+  changeTaskColumn,
+  changeTaskPosition,
+} = tasksSlice.actions;

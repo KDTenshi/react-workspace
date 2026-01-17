@@ -53,6 +53,54 @@
   height: 25vh;
 }
 
+.Priorities {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.Subtitle {
+  @include t.body_1();
+
+  color: c.$GRAY_DARK;
+}
+
+.Picker {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+}
+
+@mixin priority($color) {
+  @include t.body_2();
+
+  background: rgba($color: $color, $alpha: 0.25);
+  border: 1px solid $color;
+  width: max-content;
+  text-transform: uppercase;
+  padding: 5px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: 0;
+
+  &.Active {
+    background: $color;
+  }
+}
+
+.Low {
+  @include priority(c.$GREEN_LIGHT);
+}
+
+.Moderate {
+  @include priority(c.$YELLOW_LIGHT);
+}
+
+.High {
+  @include priority(c.$RED_LIGHT);
+}
+
 .Buttons {
   display: flex;
   align-items: center;
