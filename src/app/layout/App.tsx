@@ -2,20 +2,19 @@ import type { FC } from "react";
 import "../style/App.scss";
 import { Header } from "../../components/Header";
 import { TasksBoard } from "../../components/TasksBoard";
-import { AddTaskPopup } from "../../components/AddTaskPopup";
 import { useAppSelector } from "../store/appStore";
-import { EditTaskPopup } from "../../components/EditTaskPopup";
+import { TaskPopup } from "../../components/TaskPopup";
 
 const App: FC = () => {
-  const isFormShown = useAppSelector((state) => state.tasks.isFormShown);
   const selectedTaskID = useAppSelector((state) => state.tasks.selectedTaskID);
+  const isTaskPopupShown = useAppSelector((state) => state.ui.isTaskPopupShown);
 
   return (
     <div className="App">
       <Header />
       <TasksBoard />
-      {isFormShown && <AddTaskPopup />}
-      {selectedTaskID && <EditTaskPopup taskID={selectedTaskID} />}
+      {selectedTaskID && <TaskPopup editTaskID={selectedTaskID} />}
+      {isTaskPopupShown && <TaskPopup />}
     </div>
   );
 };

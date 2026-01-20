@@ -1,21 +1,22 @@
 import type { FC } from "react";
 import style from "./Header.module.scss";
 import { useAppDispatch } from "../../../app/store/appStore";
-import { showForm } from "../../../shared/store/tasksSlice";
+import { showTaskPopup } from "../../../shared/store/uiSlice";
+import Button from "../../../shared/ui/Button/Button";
 
 const Header: FC = () => {
   const dispatch = useAppDispatch();
 
   const handleAddTaskClick = () => {
-    dispatch(showForm());
+    dispatch(showTaskPopup());
   };
 
   return (
     <header className={style.Header}>
       <div className={style.Logo}>Workspace</div>
-      <button className={style.Button} onClick={handleAddTaskClick}>
+      <Button size="big" onClick={handleAddTaskClick}>
         Add task
-      </button>
+      </Button>
     </header>
   );
 };

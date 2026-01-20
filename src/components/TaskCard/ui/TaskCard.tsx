@@ -5,6 +5,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import type { TTaskPriority } from "../../../shared/types/types";
 import { deleteTask, setSelectedTaskID } from "../../../shared/store/tasksSlice";
 import { getDateString } from "../../../shared/utils/getDateString";
+import Button from "../../../shared/ui/Button/Button";
 
 interface TaskCardProps {
   taskID: string;
@@ -35,16 +36,16 @@ const TaskCard: FC<TaskCardProps> = ({ taskID }) => {
       <div className={style.Content}>
         <div className={style.Info}>
           <h2 className={style.Title}>{task.title}</h2>
-          <p className={style.Body}>{task.body}</p>
+          <p className={style.Body}>{task.body.length > 0 ? task.body : "No body..."}</p>
           <p className={priorityStyles[task.priority]}>{task.priority}</p>
         </div>
         <div className={style.Controls}>
-          <button className={style.Button} onClick={handleDeleteClick}>
+          <Button size="medium" onClick={handleDeleteClick}>
             DEL
-          </button>
-          <button className={style.Button} onClick={handleEditClick}>
+          </Button>
+          <Button size="medium" onClick={handleEditClick}>
             EDT
-          </button>
+          </Button>
         </div>
       </div>
       <p className={style.Date}>{getDateString(task.date)}</p>

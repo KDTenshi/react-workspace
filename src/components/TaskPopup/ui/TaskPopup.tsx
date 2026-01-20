@@ -1,60 +1,69 @@
 import { useState, type FC } from "react";
-import style from "./EditTaskPopup.module.scss";
+import style from "./TaskPopup.module.scss";
 import { useAppDispatch, useAppSelector } from "../../../app/store/appStore";
-import { editTask, setSelectedTaskID } from "../../../shared/store/tasksSlice";
 import type { TTaskPriority } from "../../../shared/types/types";
+import { hideTaskPopup } from "../../../shared/store/uiSlice";
+import { addTask, editTask, setSelectedTaskID } from "../../../shared/store/tasksSlice";
+import Button from "../../../shared/ui/Button/Button";
 
-interface EditTaskPopupProps {
-  taskID: string;
+interface TaskPopupProps {
+  editTaskID?: string;
 }
 
-const EditTaskPopup: FC<EditTaskPopupProps> = ({ taskID }) => {
-  const task = useAppSelector((state) => state.tasks.list[taskID]);
-
-  const [title, setTitle] = useState(task.title);
-  const [body, setBody] = useState(task.body);
-  const [priority, setPriority] = useState<TTaskPriority>(task.priority);
-
+const TaskPopup: FC<TaskPopupProps> = ({ editTaskID = "" }) => {
+  const task = useAppSelector((state) => state.tasks.list[editTaskID]);
   const dispatch = useAppDispatch();
 
-  const handleHidePopup = () => {
+  const [titleValue, setTitleValue] = useState(task ? task.title : "");
+  const [bodyValue, setBodyValue] = useState(task ? task.body : "");
+  const [priority, setPriority] = useState<TTaskPriority>(task ? task.priority : "low");
+
+  const hidePopup = () => {
+    dispatch(hideTaskPopup());
     dispatch(setSelectedTaskID({ taskID: null }));
   };
 
   const handleWrapperClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const target = e.target as HTMLElement;
 
-    if (target.classList.contains(style.Wrapper)) handleHidePopup();
+    if (target.classList.contains(style.Wrapper)) {
+      hidePopup();
+    }
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const taskTitle = title.trim();
-    const taskBody = body.trim();
+    const title = titleValue.trim();
+    const body = bodyValue.trim();
 
-    if (taskTitle) {
-      dispatch(editTask({ taskID, title: taskTitle, body: taskBody, priority }));
-      handleHidePopup();
+    if (!title) return;
+
+    if (task) {
+      dispatch(editTask({ taskID: editTaskID, title, body, priority }));
+    } else {
+      dispatch(addTask({ title, body, priority }));
     }
+
+    hidePopup();
   };
 
   return (
     <div className={style.Wrapper} onClick={handleWrapperClick}>
       <form className={style.Popup} onSubmit={handleSubmit}>
-        <h2 className={style.Title}>Edit task</h2>
+        <h2 className={style.Title}>{task ? "Edit" : "Add new"} task</h2>
         <input
           type="text"
           className={style.Input}
           placeholder="Task title..."
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={titleValue}
+          onChange={(e) => setTitleValue(e.target.value)}
         />
         <textarea
           className={style.Textarea}
           placeholder="Task body..."
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
+          value={bodyValue}
+          onChange={(e) => setBodyValue(e.target.value)}
         ></textarea>
         <div className={style.Priorities}>
           <p className={style.Subtitle}>Set priority</p>
@@ -83,16 +92,16 @@ const EditTaskPopup: FC<EditTaskPopupProps> = ({ taskID }) => {
           </div>
         </div>
         <div className={style.Buttons}>
-          <button className={style.Button} type="button" onClick={handleHidePopup}>
+          <Button size="big" type="button" onClick={hidePopup}>
             Cancel
-          </button>
-          <button className={style.Button} type="submit">
+          </Button>
+          <Button size="big" type="submit">
             Confirm
-          </button>
+          </Button>
         </div>
       </form>
     </div>
   );
 };
 
-export default EditTaskPopup;
+export default TaskPopup;

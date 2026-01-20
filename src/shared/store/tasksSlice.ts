@@ -5,7 +5,6 @@ import { arrayMove } from "@dnd-kit/sortable";
 type TasksState = {
   list: { [key: string]: TTask };
   columns: { [key in TColumnType]: string[] };
-  isFormShown: boolean;
   draggingTaskID: string | null;
   selectedTaskID: string | null;
 };
@@ -17,7 +16,6 @@ const initialState: TasksState = {
     doing: [],
     done: [],
   },
-  isFormShown: false,
   draggingTaskID: null,
   selectedTaskID: null,
 };
@@ -31,8 +29,8 @@ export const tasksSlice = createSlice({
 
       const newTask: TTask = {
         id: nanoid(),
-        title: title,
-        body: body.length > 0 ? body : "No body...",
+        title,
+        body,
         date: Date.now(),
         column: "todo",
         priority,
@@ -52,7 +50,7 @@ export const tasksSlice = createSlice({
       console.log(task);
 
       task.title = title;
-      task.body = body.length > 0 ? body : "No body...";
+      task.body = body;
       task.priority = priority;
     },
     deleteTask: (state, action: PayloadAction<{ taskID: string }>) => {
@@ -62,12 +60,6 @@ export const tasksSlice = createSlice({
 
       state.columns[toDelete.column] = state.columns[toDelete.column].filter((id) => id !== taskID);
       delete state.list[taskID];
-    },
-    showForm: (state) => {
-      state.isFormShown = true;
-    },
-    hideForm: (state) => {
-      state.isFormShown = false;
     },
     setDraggingTaskID: (state, action: PayloadAction<{ taskID: string | null }>) => {
       const { taskID } = action.payload;
@@ -114,8 +106,6 @@ export const {
   addTask,
   editTask,
   deleteTask,
-  showForm,
-  hideForm,
   setDraggingTaskID,
   setSelectedTaskID,
   changeTaskColumn,
