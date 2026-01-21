@@ -1,3 +1,3 @@
 # Workspace project made with React
 
-Current functionality: nothing (WIP)
+Current functionality: creating/editing/deleting tasks and moving them between columns
