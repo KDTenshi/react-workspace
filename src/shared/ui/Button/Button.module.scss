@@ -10,6 +10,10 @@
   transition: all 0.25s;
   border-radius: 10px;
   color: c.$GRAY_DARK;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 
   &:hover {
     background: c.$GRAY_WHITE;

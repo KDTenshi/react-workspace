@@ -1,0 +1,36 @@
+@use "../../../shared/style/colors.scss" as c;
+@use "../../../shared/style/typography.scss" as t;
+
+.Wrapper {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba($color: c.$BLACK, $alpha: 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Popup {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px 25px;
+  border-radius: 10px;
+  background: c.$WHITE;
+}
+
+.Title {
+  @include t.heading_3();
+
+  color: c.$BLACK;
+}
+
+.Buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
