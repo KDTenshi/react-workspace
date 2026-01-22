@@ -7,6 +7,7 @@ import { useSortable } from "@dnd-kit/sortable";
 
 interface TasksColumnProps {
   type: TColumnType;
+  boardID: string;
 }
 
 const columnTitles: { [key in TColumnType]: string } = {
@@ -15,9 +16,9 @@ const columnTitles: { [key in TColumnType]: string } = {
   done: "Done",
 };
 
-const TasksColumn: FC<TasksColumnProps> = ({ type }) => {
+const TasksColumn: FC<TasksColumnProps> = ({ type, boardID }) => {
   const { setNodeRef } = useSortable({ id: type, data: { type: "column" } });
-  const tasksIDs = useAppSelector((state) => state.tasks.columns[type]);
+  const tasksIDs = useAppSelector((state) => state.tasks.boards[boardID].columns[type]);
 
   return (
     <div className={style.Column}>
@@ -25,7 +26,7 @@ const TasksColumn: FC<TasksColumnProps> = ({ type }) => {
       <div className={style.Tasks} ref={setNodeRef}>
         {tasksIDs.length === 0 && <p className={style.Empty}>No tasks here yet</p>}
         {tasksIDs.map((taskID) => (
-          <TaskCard taskID={taskID} key={taskID} />
+          <TaskCard taskID={taskID} key={taskID} boardID={boardID} />
         ))}
       </div>
     </div>

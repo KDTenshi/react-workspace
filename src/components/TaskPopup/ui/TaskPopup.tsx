@@ -11,7 +11,11 @@ interface TaskPopupProps {
 }
 
 const TaskPopup: FC<TaskPopupProps> = ({ editTaskID = "" }) => {
-  const task = useAppSelector((state) => state.tasks.list[editTaskID]);
+  const selectedBoardID = useAppSelector((state) => state.tasks.selectedBoardID);
+  const task = useAppSelector((state) =>
+    selectedBoardID ? state.tasks.boards[selectedBoardID].tasks[editTaskID] : null,
+  );
+
   const dispatch = useAppDispatch();
 
   const [titleValue, setTitleValue] = useState(task ? task.title : "");

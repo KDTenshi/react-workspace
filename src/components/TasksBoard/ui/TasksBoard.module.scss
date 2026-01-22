@@ -5,8 +5,28 @@
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
+}
+
+.Head {
+  padding: 15px 50px;
+  background: c.$WHITE;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid c.$GRAY_LIGHT;
+}
+
+.Title {
+  @include t.heading_2();
+
+  color: c.$BLACK;
+}
+
+.Columns {
+  padding: 25px 75px;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 25px;
-  padding: 25px 75px;
 }

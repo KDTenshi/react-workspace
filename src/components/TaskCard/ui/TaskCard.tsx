@@ -11,6 +11,7 @@ import Icon from "../../../shared/ui/Icon/Icon";
 
 interface TaskCardProps {
   taskID: string;
+  boardID: string;
 }
 
 const priorityStyles: { [key in TTaskPriority]: string } = {
@@ -19,11 +20,11 @@ const priorityStyles: { [key in TTaskPriority]: string } = {
   high: style.High,
 };
 
-const TaskCard: FC<TaskCardProps> = ({ taskID }) => {
+const TaskCard: FC<TaskCardProps> = ({ taskID, boardID }) => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const { attributes, listeners, setNodeRef } = useSortable({ id: taskID, data: { type: "task" } });
-  const task = useAppSelector((state) => state.tasks.list[taskID]);
+  const task = useAppSelector((state) => state.tasks.boards[boardID].tasks[taskID]);
 
   const dispatch = useAppDispatch();
 

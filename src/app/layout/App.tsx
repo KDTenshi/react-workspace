@@ -8,11 +8,12 @@ import { TaskPopup } from "../../components/TaskPopup";
 const App: FC = () => {
   const selectedTaskID = useAppSelector((state) => state.tasks.selectedTaskID);
   const isTaskPopupShown = useAppSelector((state) => state.ui.isTaskPopupShown);
+  const selectedBoardID = useAppSelector((state) => state.tasks.selectedBoardID);
 
   return (
     <div className="App">
       <Header />
-      <TasksBoard />
+      {selectedBoardID && <TasksBoard boardID={selectedBoardID} />}
       {selectedTaskID && <TaskPopup editTaskID={selectedTaskID} />}
       {isTaskPopupShown && <TaskPopup />}
     </div>

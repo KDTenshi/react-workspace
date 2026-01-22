@@ -15,10 +15,17 @@ import { useAppDispatch, useAppSelector } from "../../../app/store/appStore";
 import { changeTaskColumn, changeTaskPosition, setDraggingTaskID } from "../../../shared/store/tasksSlice";
 import type { TColumnType } from "../../../shared/types/types";
 import { TaskCard } from "../../TaskCard";
+import Button from "../../../shared/ui/Button/Button";
+import { showTaskPopup } from "../../../shared/store/uiSlice";
 
-const TasksBoard: FC = () => {
+interface TasksBoardProps {
+  boardID: string;
+}
+
+const TasksBoard: FC<TasksBoardProps> = ({ boardID }) => {
   const dispatch = useAppDispatch();
   const draggingTaskID = useAppSelector((state) => state.tasks.draggingTaskID);
+  const board = useAppSelector((state) => state.tasks.boards[boardID]);
 
   const handleDragStart = (e: DragStartEvent) => {
     const taskID = e.active.id as string;
@@ -63,20 +70,32 @@ const TasksBoard: FC = () => {
     dispatch(setDraggingTaskID({ taskID: null }));
   };
 
+  const handleAddTaskClick = () => {
+    dispatch(showTaskPopup());
+  };
+
   return (
     <div className={style.Board}>
-      <DndContext
-        sensors={sensors}
-        onDragStart={handleDragStart}
-        onDragOver={handleDragOver}
-        onDragEnd={handleDragEnd}
-        collisionDetection={pointerWithin}
-      >
-        <TasksColumn type={"todo"} />
-        <TasksColumn type={"doing"} />
-        <TasksColumn type={"done"} />
-        <DragOverlay>{draggingTaskID && <TaskCard taskID={draggingTaskID} />}</DragOverlay>
-      </DndContext>
+      <div className={style.Head}>
+        <h2 className={style.Title}>{board.title}</h2>
+        <Button size="big" onClick={handleAddTaskClick}>
+          Add task
+        </Button>
+      </div>
+      <div className={style.Columns}>
+        <DndContext
+          sensors={sensors}
+          onDragStart={handleDragStart}
+          onDragOver={handleDragOver}
+          onDragEnd={handleDragEnd}
+          collisionDetection={pointerWithin}
+        >
+          <TasksColumn type={"todo"} boardID={boardID} />
+          <TasksColumn type={"doing"} boardID={boardID} />
+          <TasksColumn type={"done"} boardID={boardID} />
+          <DragOverlay>{draggingTaskID && <TaskCard taskID={draggingTaskID} boardID={boardID} />}</DragOverlay>
+        </DndContext>
+      </div>
     </div>
   );
 };
