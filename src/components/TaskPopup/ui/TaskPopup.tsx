@@ -5,16 +5,15 @@ import type { TTaskPriority } from "../../../shared/types/types";
 import { hideTaskPopup } from "../../../shared/store/uiSlice";
 import { addTask, editTask, setSelectedTaskID } from "../../../shared/store/tasksSlice";
 import Button from "../../../shared/ui/Button/Button";
+import { useParams } from "react-router";
 
 interface TaskPopupProps {
   editTaskID?: string;
 }
 
 const TaskPopup: FC<TaskPopupProps> = ({ editTaskID = "" }) => {
-  const selectedBoardID = useAppSelector((state) => state.tasks.selectedBoardID);
-  const task = useAppSelector((state) =>
-    selectedBoardID ? state.tasks.boards[selectedBoardID].tasks[editTaskID] : null,
-  );
+  const { boardID } = useParams();
+  const task = useAppSelector((state) => (boardID ? state.tasks.boards[boardID].tasks[editTaskID] : null));
 
   const dispatch = useAppDispatch();
 
@@ -42,11 +41,12 @@ const TaskPopup: FC<TaskPopupProps> = ({ editTaskID = "" }) => {
     const body = bodyValue.trim();
 
     if (!title) return;
+    if (!boardID) return;
 
     if (task) {
-      dispatch(editTask({ taskID: editTaskID, title, body, priority }));
+      dispatch(editTask({ taskID: editTaskID, title, body, priority, boardID }));
     } else {
-      dispatch(addTask({ title, body, priority }));
+      dispatch(addTask({ title, body, priority, boardID }));
     }
 
     hidePopup();

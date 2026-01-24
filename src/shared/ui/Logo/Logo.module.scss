@@ -1,0 +1,14 @@
+@use "../../style/colors.scss" as c;
+@use "../../style/typography.scss" as t;
+
+.Logo {
+  @include t.heading_2();
+
+  text-transform: uppercase;
+  color: c.$BLACK;
+  text-decoration: none;
+
+  &::first-letter {
+    color: c.$RED;
+  }
+}

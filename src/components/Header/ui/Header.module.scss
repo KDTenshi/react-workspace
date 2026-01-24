@@ -11,16 +11,6 @@
   border-bottom: 1px solid c.$GRAY_LIGHT;
 }
 
-.Logo {
-  @include t.heading_2();
-
-  text-transform: uppercase;
-
-  &::first-letter {
-    color: c.$RED;
-  }
-}
-
 .Boards {
   display: flex;
   align-items: center;

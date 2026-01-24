@@ -3,21 +3,12 @@ import type { TBoard, TColumnType, TTask, TTaskPriority } from "../types/types";
 import { arrayMove } from "@dnd-kit/sortable";
 
 type TasksState = {
-  list: { [key: string]: TTask };
-  columns: { [key in TColumnType]: string[] };
   draggingTaskID: string | null;
   selectedTaskID: string | null;
   boards: { [key: string]: TBoard };
-  selectedBoardID: string | null;
 };
 
 const initialState: TasksState = {
-  list: {},
-  columns: {
-    todo: [],
-    doing: [],
-    done: [],
-  },
   draggingTaskID: null,
   selectedTaskID: null,
   boards: {
@@ -79,15 +70,17 @@ const initialState: TasksState = {
       },
     },
   },
-  selectedBoardID: null,
 };
 
 export const tasksSlice = createSlice({
   name: "tasks",
   initialState,
   reducers: {
-    addTask: (state, action: PayloadAction<{ title: string; body: string; priority: TTaskPriority }>) => {
-      const { title, body, priority } = action.payload;
+    addTask: (
+      state,
+      action: PayloadAction<{ title: string; body: string; priority: TTaskPriority; boardID: string }>,
+    ) => {
+      const { title, body, priority, boardID } = action.payload;
 
       const newTask: TTask = {
         id: nanoid(),
@@ -98,38 +91,30 @@ export const tasksSlice = createSlice({
         priority,
       };
 
-      if (!state.selectedBoardID) return;
-
-      state.boards[state.selectedBoardID].columns.todo.push(newTask.id);
-      state.boards[state.selectedBoardID].tasks[newTask.id] = newTask;
+      state.boards[boardID].columns.todo.push(newTask.id);
+      state.boards[boardID].tasks[newTask.id] = newTask;
     },
     editTask: (
       state,
-      action: PayloadAction<{ taskID: string; title: string; body: string; priority: TTaskPriority }>,
+      action: PayloadAction<{ taskID: string; title: string; body: string; priority: TTaskPriority; boardID: string }>,
     ) => {
-      const { taskID, title, body, priority } = action.payload;
+      const { taskID, title, body, priority, boardID } = action.payload;
 
-      if (!state.selectedBoardID) return;
-
-      const task = state.boards[state.selectedBoardID].tasks[taskID];
-
-      console.log(task);
+      const task = state.boards[boardID].tasks[taskID];
 
       task.title = title;
       task.body = body;
       task.priority = priority;
     },
-    deleteTask: (state, action: PayloadAction<{ taskID: string }>) => {
-      const { taskID } = action.payload;
+    deleteTask: (state, action: PayloadAction<{ taskID: string; boardID: string }>) => {
+      const { taskID, boardID } = action.payload;
 
-      if (!state.selectedBoardID) return;
+      const toDelete = state.boards[boardID].tasks[taskID];
 
-      const toDelete = state.boards[state.selectedBoardID].tasks[taskID];
-
-      state.boards[state.selectedBoardID].columns[toDelete.column] = state.boards[state.selectedBoardID].columns[
-        toDelete.column
-      ].filter((id) => id !== taskID);
-      delete state.boards[state.selectedBoardID].tasks[taskID];
+      state.boards[boardID].columns[toDelete.column] = state.boards[boardID].columns[toDelete.column].filter(
+        (id) => id !== taskID,
+      );
+      delete state.boards[boardID].tasks[taskID];
     },
     setDraggingTaskID: (state, action: PayloadAction<{ taskID: string | null }>) => {
       const { taskID } = action.payload;
@@ -141,12 +126,10 @@ export const tasksSlice = createSlice({
 
       state.selectedTaskID = taskID;
     },
-    changeTaskColumn: (state, action: PayloadAction<{ taskID: string; column: TColumnType }>) => {
-      const { taskID, column } = action.payload;
+    changeTaskColumn: (state, action: PayloadAction<{ taskID: string; boardID: string; column: TColumnType }>) => {
+      const { taskID, boardID, column } = action.payload;
 
-      if (!state.selectedBoardID) return;
-
-      const task = state.boards[state.selectedBoardID].tasks[taskID];
+      const task = state.boards[boardID].tasks[taskID];
 
       if (!task) return;
 
@@ -154,34 +137,27 @@ export const tasksSlice = createSlice({
 
       if (column === prevColumn) return;
 
-      state.boards[state.selectedBoardID].columns[prevColumn] = state.boards[state.selectedBoardID].columns[
-        prevColumn
-      ].filter((id) => id !== taskID);
-      state.boards[state.selectedBoardID].columns[column].push(taskID);
+      state.boards[boardID].columns[prevColumn] = state.boards[boardID].columns[prevColumn].filter(
+        (id) => id !== taskID,
+      );
+      state.boards[boardID].columns[column].push(taskID);
       task.column = column;
     },
-    changeTaskPosition: (state, action: PayloadAction<{ taskID: string; overTaskID: string }>) => {
-      const { taskID, overTaskID } = action.payload;
+    changeTaskPosition: (state, action: PayloadAction<{ taskID: string; overTaskID: string; boardID: string }>) => {
+      const { taskID, overTaskID, boardID } = action.payload;
 
-      if (!state.selectedBoardID) return;
+      const column = state.boards[boardID].tasks[taskID].column;
 
-      const column = state.boards[state.selectedBoardID].tasks[taskID].column;
-
-      const taskIndex = state.boards[state.selectedBoardID].columns[column].findIndex((id) => id === taskID);
-      const overTaskIndex = state.boards[state.selectedBoardID].columns[column].findIndex((id) => id === overTaskID);
+      const taskIndex = state.boards[boardID].columns[column].findIndex((id) => id === taskID);
+      const overTaskIndex = state.boards[boardID].columns[column].findIndex((id) => id === overTaskID);
 
       if (taskIndex === -1 || overTaskIndex === -1) return;
 
-      state.boards[state.selectedBoardID].columns[column] = arrayMove(
-        state.boards[state.selectedBoardID].columns[column],
+      state.boards[boardID].columns[column] = arrayMove(
+        state.boards[boardID].columns[column],
         taskIndex,
         overTaskIndex,
       );
-    },
-    setSelectedBoardID: (state, action: PayloadAction<{ boardID: string }>) => {
-      const { boardID } = action.payload;
-
-      state.selectedBoardID = boardID;
     },
     addBoard: (state) => {
       const title = `Board ${Date.now() % 1000}`;
@@ -210,6 +186,5 @@ export const {
   setSelectedTaskID,
   changeTaskColumn,
   changeTaskPosition,
-  setSelectedBoardID,
   addBoard,
 } = tasksSlice.actions;

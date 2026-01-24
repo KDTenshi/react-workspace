@@ -1,21 +1,23 @@
 import type { FC } from "react";
 import "../style/App.scss";
 import { Header } from "../../components/Header";
-import { TasksBoard } from "../../components/TasksBoard";
-import { useAppSelector } from "../store/appStore";
-import { TaskPopup } from "../../components/TaskPopup";
+import { BrowserRouter, Route, Routes } from "react-router";
+import { BoardPage } from "../../pages/BoardPage";
+import { SideMenu } from "../../components/SideMenu";
 
 const App: FC = () => {
-  const selectedTaskID = useAppSelector((state) => state.tasks.selectedTaskID);
-  const isTaskPopupShown = useAppSelector((state) => state.ui.isTaskPopupShown);
-  const selectedBoardID = useAppSelector((state) => state.tasks.selectedBoardID);
-
   return (
     <div className="App">
-      <Header />
-      {selectedBoardID && <TasksBoard boardID={selectedBoardID} />}
-      {selectedTaskID && <TaskPopup editTaskID={selectedTaskID} />}
-      {isTaskPopupShown && <TaskPopup />}
+      <BrowserRouter>
+        <Header />
+        <div className="Content">
+          <SideMenu />
+          <Routes>
+            <Route path="/" element={<div className="Home">Home Page</div>} />
+            <Route path="/board/:boardID" element={<BoardPage />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
     </div>
   );
 };

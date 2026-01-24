@@ -59,7 +59,7 @@ const TaskCard: FC<TaskCardProps> = ({ taskID, boardID }) => {
         <ConfirmPopup
           question="Delete task?"
           hidePopup={() => setIsDeleting(false)}
-          handleConfirm={() => dispatch(deleteTask({ taskID }))}
+          handleConfirm={() => dispatch(deleteTask({ taskID, boardID }))}
         />
       )}
     </div>
