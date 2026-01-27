@@ -11,65 +11,7 @@ type TasksState = {
 const initialState: TasksState = {
   draggingTaskID: null,
   selectedTaskID: null,
-  boards: {
-    "001": {
-      id: "001",
-      title: "Board 1",
-      tasks: {
-        t01: {
-          id: "t01",
-          title: "Task 1",
-          body: "",
-          date: Date.now(),
-          priority: "low",
-          column: "todo",
-        },
-      },
-      columns: {
-        todo: ["t01"],
-        doing: [],
-        done: [],
-      },
-    },
-    "002": {
-      id: "002",
-      title: "Board 2",
-      tasks: {
-        t02: {
-          id: "t02",
-          title: "Task 2",
-          body: "",
-          date: Date.now(),
-          priority: "moderate",
-          column: "doing",
-        },
-      },
-      columns: {
-        todo: [],
-        doing: ["t02"],
-        done: [],
-      },
-    },
-    "003": {
-      id: "003",
-      title: "Board 3",
-      tasks: {
-        t03: {
-          id: "t03",
-          title: "Task 3",
-          body: "",
-          date: Date.now(),
-          priority: "high",
-          column: "done",
-        },
-      },
-      columns: {
-        todo: [],
-        doing: [],
-        done: ["t03"],
-      },
-    },
-  },
+  boards: {},
 };
 
 export const tasksSlice = createSlice({
@@ -159,8 +101,8 @@ export const tasksSlice = createSlice({
         overTaskIndex,
       );
     },
-    addBoard: (state) => {
-      const title = `Board ${Date.now() % 1000}`;
+    addBoard: (state, action: PayloadAction<{ title: string }>) => {
+      const { title } = action.payload;
 
       const newBoard: TBoard = {
         id: nanoid(),
@@ -175,6 +117,16 @@ export const tasksSlice = createSlice({
 
       state.boards[newBoard.id] = newBoard;
     },
+    editBoard: (state, action: PayloadAction<{ boardID: string; title: string }>) => {
+      const { boardID, title } = action.payload;
+
+      state.boards[boardID].title = title;
+    },
+    deleteBoard: (state, acton: PayloadAction<{ boardID: string }>) => {
+      const { boardID } = acton.payload;
+
+      delete state.boards[boardID];
+    },
   },
 });
 
@@ -187,4 +139,6 @@ export const {
   changeTaskColumn,
   changeTaskPosition,
   addBoard,
+  editBoard,
+  deleteBoard,
 } = tasksSlice.actions;

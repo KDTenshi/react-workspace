@@ -14,6 +14,12 @@
   padding: 25px 15px;
 }
 
+.Head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .Text {
   @include t.body_1();
 

@@ -4,8 +4,12 @@ import { Header } from "../../components/Header";
 import { BrowserRouter, Route, Routes } from "react-router";
 import { BoardPage } from "../../pages/BoardPage";
 import { SideMenu } from "../../components/SideMenu";
+import { BoardPopup } from "../../components/BoardPopup";
+import { useAppSelector } from "../store/appStore";
 
 const App: FC = () => {
+  const isBoardPopupShown = useAppSelector((state) => state.ui.isBoardPopupShown);
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -17,6 +21,7 @@ const App: FC = () => {
             <Route path="/board/:boardID" element={<BoardPage />} />
           </Routes>
         </div>
+        {isBoardPopupShown && <BoardPopup />}
       </BrowserRouter>
     </div>
   );

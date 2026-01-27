@@ -9,7 +9,7 @@
 }
 
 .Head {
-  padding: 15px 50px;
+  padding: 15px 25px;
   background: c.$WHITE;
   display: flex;
   align-items: center;
@@ -18,13 +18,31 @@
 }
 
 .Title {
-  @include t.heading_2();
+  @include t.heading_3();
 
   color: c.$BLACK;
 }
 
+.Input {
+  @include t.heading_3();
+
+  width: 25vw;
+  color: c.$BLACK;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid c.$BLACK;
+  outline: 0;
+}
+
+.Buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
 .Columns {
-  padding: 25px 75px;
+  padding: 25px 50px;
   display: flex;
   align-items: center;
   justify-content: center;

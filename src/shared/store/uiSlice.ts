@@ -2,10 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 type UIState = {
   isTaskPopupShown: boolean;
+  isBoardPopupShown: boolean;
 };
 
 const initialState: UIState = {
   isTaskPopupShown: false,
+  isBoardPopupShown: false,
 };
 
 export const uiSlice = createSlice({
@@ -18,7 +20,13 @@ export const uiSlice = createSlice({
     hideTaskPopup: (state) => {
       state.isTaskPopupShown = false;
     },
+    showBoardPopup: (state) => {
+      state.isBoardPopupShown = true;
+    },
+    hideBoardPopup: (state) => {
+      state.isBoardPopupShown = false;
+    },
   },
 });
 
-export const { showTaskPopup, hideTaskPopup } = uiSlice.actions;
+export const { showTaskPopup, hideTaskPopup, showBoardPopup, hideBoardPopup } = uiSlice.actions;
