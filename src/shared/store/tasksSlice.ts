@@ -18,19 +18,16 @@ export const tasksSlice = createSlice({
   name: "tasks",
   initialState,
   reducers: {
-    addTask: (
-      state,
-      action: PayloadAction<{ title: string; body: string; priority: TTaskPriority; boardID: string }>,
-    ) => {
-      const { title, body, priority, boardID } = action.payload;
+    addTask: (state, action: PayloadAction<{ title: string; boardID: string }>) => {
+      const { title, boardID } = action.payload;
 
       const newTask: TTask = {
         id: nanoid(),
         title,
-        body,
+        body: "",
         date: Date.now(),
         column: "todo",
-        priority,
+        priority: "low",
       };
 
       state.boards[boardID].columns.todo.push(newTask.id);

@@ -3,15 +3,16 @@ import style from "./TaskPopup.module.scss";
 import { useAppDispatch, useAppSelector } from "../../../app/store/appStore";
 import type { TTaskPriority } from "../../../shared/types/types";
 import { hideTaskPopup } from "../../../shared/store/uiSlice";
-import { addTask, editTask, setSelectedTaskID } from "../../../shared/store/tasksSlice";
+import { deleteTask, editTask, setSelectedTaskID } from "../../../shared/store/tasksSlice";
 import Button from "../../../shared/ui/Button/Button";
 import { useParams } from "react-router";
+import { ConfirmPopup } from "../../ConfirmPopup";
 
 interface TaskPopupProps {
-  editTaskID?: string;
+  editTaskID: string;
 }
 
-const TaskPopup: FC<TaskPopupProps> = ({ editTaskID = "" }) => {
+const TaskPopup: FC<TaskPopupProps> = ({ editTaskID }) => {
   const { boardID } = useParams();
   const task = useAppSelector((state) => (boardID ? state.tasks.boards[boardID].tasks[editTaskID] : null));
 
@@ -20,6 +21,8 @@ const TaskPopup: FC<TaskPopupProps> = ({ editTaskID = "" }) => {
   const [titleValue, setTitleValue] = useState(task ? task.title : "");
   const [bodyValue, setBodyValue] = useState(task ? task.body : "");
   const [priority, setPriority] = useState<TTaskPriority>(task ? task.priority : "low");
+
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const hidePopup = () => {
     dispatch(hideTaskPopup());
@@ -45,10 +48,14 @@ const TaskPopup: FC<TaskPopupProps> = ({ editTaskID = "" }) => {
 
     if (task) {
       dispatch(editTask({ taskID: editTaskID, title, body, priority, boardID }));
-    } else {
-      dispatch(addTask({ title, body, priority, boardID }));
     }
 
+    hidePopup();
+  };
+
+  const handleDelete = () => {
+    if (!task || !boardID) return;
+    dispatch(deleteTask({ taskID: task.id, boardID }));
     hidePopup();
   };
 
@@ -95,14 +102,23 @@ const TaskPopup: FC<TaskPopupProps> = ({ editTaskID = "" }) => {
             </button>
           </div>
         </div>
-        <div className={style.Buttons}>
-          <Button size="big" type="button" onClick={hidePopup}>
-            Cancel
+        <div className={style.Bottom}>
+          <Button size="big" type="button" onClick={() => setIsDeleting(true)}>
+            Delete
           </Button>
-          <Button size="big" type="submit">
-            Confirm
-          </Button>
+          <div className={style.Buttons}>
+            <Button size="big" type="button" onClick={hidePopup}>
+              Cancel
+            </Button>
+            <Button size="big" type="submit">
+              Confirm
+            </Button>
+          </div>
         </div>
+
+        {isDeleting && task && boardID && (
+          <ConfirmPopup question="Delete task?" hidePopup={() => setIsDeleting(false)} handleConfirm={handleDelete} />
+        )}
       </form>
     </div>
   );

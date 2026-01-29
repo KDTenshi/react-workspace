@@ -13,6 +13,7 @@ import {
 } from "@dnd-kit/core";
 import { useAppDispatch, useAppSelector } from "../../../app/store/appStore";
 import {
+  addTask,
   changeTaskColumn,
   changeTaskPosition,
   deleteBoard,
@@ -22,7 +23,6 @@ import {
 import type { TColumnType } from "../../../shared/types/types";
 import { TaskCard } from "../../TaskCard";
 import Button from "../../../shared/ui/Button/Button";
-import { showTaskPopup } from "../../../shared/store/uiSlice";
 import { ConfirmPopup } from "../../ConfirmPopup";
 import { useNavigate } from "react-router";
 
@@ -38,6 +38,8 @@ const TasksBoard: FC<TasksBoardProps> = ({ boardID }) => {
   const [isBoardEdit, setIsBoardEdit] = useState(false);
   const [editBoardValue, setEditBoardValue] = useState(board.title);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  const [titleValue, setTitleValue] = useState("");
 
   const navigate = useNavigate();
 
@@ -84,8 +86,15 @@ const TasksBoard: FC<TasksBoardProps> = ({ boardID }) => {
     dispatch(setDraggingTaskID({ taskID: null }));
   };
 
-  const handleAddTaskClick = () => {
-    dispatch(showTaskPopup());
+  const handleAddTaskSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const title = titleValue.trim();
+
+    if (title) {
+      dispatch(addTask({ title, boardID }));
+      setTitleValue("");
+    }
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -108,31 +117,40 @@ const TasksBoard: FC<TasksBoardProps> = ({ boardID }) => {
   return (
     <div className={style.Board}>
       <div className={style.Head}>
-        {!isBoardEdit && <h3 className={style.Title}>{board.title}</h3>}
-        {isBoardEdit && (
-          <form className={style.Form} onSubmit={handleSubmit}>
-            <input
-              type="text"
-              value={editBoardValue}
-              onChange={(e) => setEditBoardValue(e.target.value)}
-              className={style.Input}
-              placeholder="Board title..."
-              autoFocus
-              onBlur={() => setIsBoardEdit(false)}
-            />
-          </form>
-        )}
-        <div className={style.Buttons}>
-          <Button size="big" onClick={handleAddTaskClick}>
-            Add task
-          </Button>
-          <Button size="big" onClick={() => setIsBoardEdit(true)}>
-            Edit
-          </Button>
-          <Button size="big" onClick={() => setIsDeleting(true)}>
-            Delete
-          </Button>
+        <div className={style.Info}>
+          {!isBoardEdit && <h3 className={style.Title}>{board.title}</h3>}
+          {isBoardEdit && (
+            <form className={style.Form} onSubmit={handleSubmit}>
+              <input
+                type="text"
+                value={editBoardValue}
+                onChange={(e) => setEditBoardValue(e.target.value)}
+                className={style.Input}
+                placeholder="Board title..."
+                autoFocus
+                onBlur={() => setIsBoardEdit(false)}
+              />
+            </form>
+          )}
+          <div className={style.Buttons}>
+            <Button size="big" onClick={() => setIsBoardEdit(true)}>
+              Edit
+            </Button>
+            <Button size="big" onClick={() => setIsDeleting(true)}>
+              Delete
+            </Button>
+          </div>
         </div>
+        <form className={style.TaskForm} onSubmit={handleAddTaskSubmit}>
+          <input
+            type="text"
+            placeholder="Task title..."
+            className={style.TaskInput}
+            value={titleValue}
+            onChange={(e) => setTitleValue(e.target.value)}
+          />
+          <Button size="medium">Add task</Button>
+        </form>
       </div>
       <div className={style.Columns}>
         <DndContext

@@ -11,10 +11,35 @@
 .Head {
   padding: 15px 25px;
   background: c.$WHITE;
+  border-bottom: 1px solid c.$GRAY_LIGHT;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.Info {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid c.$GRAY_LIGHT;
+}
+
+.TaskForm {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+}
+
+.TaskInput {
+  @include t.body_2();
+
+  color: c.$GRAY_DARK;
+  padding: 5px 15px;
+  border-radius: 5px;
+  border: 1px solid c.$GRAY_LIGHT;
+  background: c.$GRAY_WHITE;
+  width: 25vw;
+  outline: 0;
 }
 
 .Title {

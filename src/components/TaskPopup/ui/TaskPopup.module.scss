@@ -101,6 +101,12 @@
   @include priority(c.$RED_LIGHT);
 }
 
+.Bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .Buttons {
   display: flex;
   align-items: center;

@@ -18,6 +18,7 @@ const columnTitles: { [key in TColumnType]: string } = {
 
 const TasksColumn: FC<TasksColumnProps> = ({ type, boardID }) => {
   const { setNodeRef } = useSortable({ id: type, data: { type: "column" } });
+
   const tasksIDs = useAppSelector((state) => state.tasks.boards[boardID].columns[type]);
 
   return (
