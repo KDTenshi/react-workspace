@@ -16,8 +16,8 @@
 .Popup {
   background: c.$WHITE;
   width: 50vw;
+  padding: 25px 50px;
   border-radius: 15px;
-  padding: 15px 25px;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -29,28 +29,36 @@
   color: c.$BLACK;
 }
 
+.Form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .Input {
   @include t.body_1();
 
-  background: c.$GRAY_WHITE;
-  border: 1px solid c.$GRAY_LIGHT;
-  outline: 0;
-  color: c.$BLACK;
+  width: 100%;
   padding: 5px 15px;
   border-radius: 5px;
+  border: 1px solid c.$GRAY_LIGHT;
+  background: c.$GRAY_WHITE;
+  outline: 0;
+  color: c.$GRAY_DARK;
 }
 
 .Textarea {
   @include t.body_1();
 
-  background: c.$GRAY_WHITE;
-  border: 1px solid c.$GRAY_LIGHT;
-  outline: 0;
-  color: c.$BLACK;
+  width: 100%;
+  height: 25vh;
   padding: 5px 15px;
   border-radius: 5px;
+  border: 1px solid c.$GRAY_LIGHT;
+  background: c.$GRAY_WHITE;
+  outline: 0;
+  color: c.$GRAY_DARK;
   resize: none;
-  height: 25vh;
 }
 
 .Priorities {
@@ -60,7 +68,7 @@
 }
 
 .Subtitle {
-  @include t.body_1();
+  @include t.heading_4();
 
   color: c.$GRAY_DARK;
 }
@@ -101,7 +109,7 @@
   @include priority(c.$RED_LIGHT);
 }
 
-.Bottom {
+.Controls {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -110,6 +118,6 @@
 .Buttons {
   display: flex;
   align-items: center;
-  justify-content: end;
-  gap: 15px;
+  justify-content: center;
+  gap: 10px;
 }

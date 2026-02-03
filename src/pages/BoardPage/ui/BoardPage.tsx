@@ -1,12 +1,11 @@
 import type { FC } from "react";
 import { TasksBoard } from "../../../components/TasksBoard";
 import { useParams } from "react-router";
-import { TaskPopup } from "../../../components/TaskPopup";
 import { useAppSelector } from "../../../app/store/appStore";
+import { TaskInfoPopup } from "../../../components/TaskInfoPopup";
 
 const BoardPage: FC = () => {
   const { boardID } = useParams();
-  const isTaskPopupShown = useAppSelector((state) => state.ui.isTaskPopupShown);
   const selectedTaskID = useAppSelector((state) => state.tasks.selectedTaskID);
 
   if (!boardID) return;
@@ -14,8 +13,7 @@ const BoardPage: FC = () => {
   return (
     <>
       <TasksBoard boardID={boardID} />
-      {isTaskPopupShown && <TaskPopup />}
-      {selectedTaskID && <TaskPopup editTaskID={selectedTaskID} />}
+      {selectedTaskID && <TaskInfoPopup taskID={selectedTaskID} boardID={boardID} />}
     </>
   );
 };

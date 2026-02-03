@@ -11,8 +11,8 @@ const App: FC = () => {
   const isBoardPopupShown = useAppSelector((state) => state.ui.isBoardPopupShown);
 
   return (
-    <div className="App">
-      <BrowserRouter>
+    <BrowserRouter>
+      <div className="App">
         <Header />
         <div className="Content">
           <SideMenu />
@@ -22,8 +22,8 @@ const App: FC = () => {
           </Routes>
         </div>
         {isBoardPopupShown && <BoardPopup />}
-      </BrowserRouter>
-    </div>
+      </div>
+    </BrowserRouter>
   );
 };
 
