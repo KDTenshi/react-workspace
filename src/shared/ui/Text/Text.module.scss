@@ -1,0 +1,44 @@
+@use "../../style/colors.scss" as c;
+@use "../../style/typography.scss" as t;
+
+.Black {
+  color: c.$BLACK;
+
+  &::selection {
+    background: c.$BLACK;
+    color: c.$WHITE;
+  }
+}
+
+.Dark {
+  color: c.$GRAY_DARK;
+
+  &::selection {
+    background: c.$GRAY_DARK;
+    color: c.$GRAY_WHITE;
+  }
+}
+
+.Big {
+  @include t.body_1();
+}
+
+.Medium {
+  @include t.body_2();
+}
+
+.Small {
+  @include t.body_3();
+}
+
+.Left {
+  text-align: left;
+}
+
+.Center {
+  text-align: center;
+}
+
+.Right {
+  text-align: right;
+}

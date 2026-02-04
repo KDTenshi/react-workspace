@@ -4,19 +4,13 @@ import Button from "../../../shared/ui/Button/Button";
 import { useAppDispatch } from "../../../app/store/appStore";
 import { hideBoardPopup } from "../../../shared/store/uiSlice";
 import { addBoard } from "../../../shared/store/tasksSlice";
+import Heading from "../../../shared/ui/Heading/Heading";
+import PopupWrapper from "../../../shared/ui/PopupWrapper/PopupWrapper";
 
 const BoardPopup: FC = () => {
   const dispatch = useAppDispatch();
 
   const [boardTitle, setBoardTitle] = useState("");
-
-  const handleWrapperClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const target = e.target as HTMLElement;
-
-    if (target.classList.contains(style.Wrapper)) {
-      dispatch(hideBoardPopup());
-    }
-  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,9 +25,11 @@ const BoardPopup: FC = () => {
   };
 
   return (
-    <div className={style.Wrapper} onClick={handleWrapperClick}>
+    <PopupWrapper hidePopup={() => dispatch(hideBoardPopup())}>
       <form className={style.Popup} onSubmit={handleSubmit}>
-        <h2 className={style.Title}>Add new board</h2>
+        <Heading level={3} color="black">
+          Add new board
+        </Heading>
         <input
           type="text"
           className={style.Input}
@@ -50,7 +46,7 @@ const BoardPopup: FC = () => {
           </Button>
         </div>
       </form>
-    </div>
+    </PopupWrapper>
   );
 };
 

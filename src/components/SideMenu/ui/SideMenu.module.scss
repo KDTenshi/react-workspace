@@ -20,12 +20,6 @@
   justify-content: space-between;
 }
 
-.Text {
-  @include t.body_1();
-
-  color: c.$GRAY_DARK;
-}
-
 .Boards {
   display: flex;
   flex-direction: column;
@@ -50,11 +44,4 @@
     background: c.$GRAY_WHITE;
     border-color: c.$GRAY_LIGHT;
   }
-}
-
-.Empty {
-  @include t.body_2();
-
-  color: c.$GRAY_DARK;
-  text-align: center;
 }

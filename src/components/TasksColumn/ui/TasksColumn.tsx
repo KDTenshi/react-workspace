@@ -4,6 +4,8 @@ import { TaskCard } from "../../TaskCard";
 import type { TColumnType } from "../../../shared/types/types";
 import { useAppSelector } from "../../../app/store/appStore";
 import { useSortable } from "@dnd-kit/sortable";
+import Heading from "../../../shared/ui/Heading/Heading";
+import Text from "../../../shared/ui/Text/Text";
 
 interface TasksColumnProps {
   type: TColumnType;
@@ -23,9 +25,15 @@ const TasksColumn: FC<TasksColumnProps> = ({ type, boardID }) => {
 
   return (
     <div className={style.Column}>
-      <h2 className={style.Title}>{columnTitles[type]}</h2>
+      <Heading level={3} color="black">
+        {columnTitles[type]}
+      </Heading>
       <div className={style.Tasks} ref={setNodeRef}>
-        {tasksIDs.length === 0 && <p className={style.Empty}>No tasks here yet</p>}
+        {tasksIDs.length === 0 && (
+          <Text size="big" color="dark" align="center">
+            No tasks here
+          </Text>
+        )}
         {tasksIDs.map((taskID) => (
           <TaskCard taskID={taskID} key={taskID} boardID={boardID} />
         ))}

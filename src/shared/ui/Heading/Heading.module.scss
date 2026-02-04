@@ -1,0 +1,36 @@
+@use "../../style/colors.scss" as c;
+@use "../../style/typography.scss" as t;
+
+.Black {
+  color: c.$BLACK;
+
+  &::selection {
+    background: c.$BLACK;
+    color: c.$WHITE;
+  }
+}
+
+.Dark {
+  color: c.$GRAY_DARK;
+
+  &::selection {
+    background: c.$GRAY_DARK;
+    color: c.$GRAY_WHITE;
+  }
+}
+
+.Heading_1 {
+  @include t.heading_1();
+}
+
+.Heading_2 {
+  @include t.heading_2();
+}
+
+.Heading_3 {
+  @include t.heading_3();
+}
+
+.Heading_4 {
+  @include t.heading_4();
+}

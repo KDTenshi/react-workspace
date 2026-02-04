@@ -42,12 +42,6 @@
   outline: 0;
 }
 
-.Title {
-  @include t.heading_3();
-
-  color: c.$BLACK;
-}
-
 .Input {
   @include t.heading_3();
 

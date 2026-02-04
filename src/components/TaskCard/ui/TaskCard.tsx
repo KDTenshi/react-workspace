@@ -5,6 +5,8 @@ import { useSortable } from "@dnd-kit/sortable";
 import type { TTaskPriority } from "../../../shared/types/types";
 import { setSelectedTaskID } from "../../../shared/store/tasksSlice";
 import { getDateString } from "../../../shared/utils/getDateString";
+import Heading from "../../../shared/ui/Heading/Heading";
+import Text from "../../../shared/ui/Text/Text";
 
 interface TaskCardProps {
   taskID: string;
@@ -31,11 +33,15 @@ const TaskCard: FC<TaskCardProps> = ({ taskID, boardID }) => {
     <div className={style.Task} {...attributes} {...listeners} ref={setNodeRef} onClick={handleEditClick}>
       <div className={style.Content}>
         <div className={style.Info}>
-          <h2 className={style.Title}>{task.title}</h2>
+          <Heading level={4} color="black">
+            {task.title}
+          </Heading>
           <p className={priorityStyles[task.priority]}>{task.priority}</p>
         </div>
       </div>
-      <p className={style.Date}>{getDateString(task.date)}</p>
+      <Text size="medium" color="dark" align="right">
+        {getDateString(task.date)}
+      </Text>
     </div>
   );
 };

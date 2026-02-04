@@ -25,6 +25,7 @@ import { TaskCard } from "../../TaskCard";
 import Button from "../../../shared/ui/Button/Button";
 import { ConfirmPopup } from "../../ConfirmPopup";
 import { useNavigate } from "react-router";
+import Heading from "../../../shared/ui/Heading/Heading";
 
 interface TasksBoardProps {
   boardID: string;
@@ -118,7 +119,11 @@ const TasksBoard: FC<TasksBoardProps> = ({ boardID }) => {
     <div className={style.Board}>
       <div className={style.Head}>
         <div className={style.Info}>
-          {!isBoardEdit && <h3 className={style.Title}>{board.title}</h3>}
+          {!isBoardEdit && (
+            <Heading level={3} color="black">
+              {board.title}
+            </Heading>
+          )}
           {isBoardEdit && (
             <form className={style.Form} onSubmit={handleSubmit}>
               <input

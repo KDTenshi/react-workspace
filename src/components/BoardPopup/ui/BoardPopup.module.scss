@@ -1,18 +1,6 @@
 @use "../../../shared/style/colors.scss" as c;
 @use "../../../shared/style/typography.scss" as t;
 
-.Wrapper {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba($color: c.$BLACK, $alpha: 0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .Popup {
   padding: 25px 50px;
   background: c.$WHITE;
@@ -20,12 +8,6 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-}
-
-.Title {
-  @include t.heading_3();
-
-  color: c.$BLACK;
 }
 
 .Input {

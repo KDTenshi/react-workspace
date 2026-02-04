@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../../app/store/appStore";
 import { Link } from "react-router";
 import Button from "../../../shared/ui/Button/Button";
 import { showBoardPopup } from "../../../shared/store/uiSlice";
+import Text from "../../../shared/ui/Text/Text";
 
 const SideMenu: FC = () => {
   const boards = useAppSelector((state) => state.tasks.boards);
@@ -18,13 +19,19 @@ const SideMenu: FC = () => {
   return (
     <div className={style.Menu}>
       <div className={style.Head}>
-        <p className={style.Text}>Your boards</p>
+        <Text size="big" color="dark">
+          Your boards
+        </Text>
         <Button size={"medium"} onClick={handleAddBoardClick}>
           Add
         </Button>
       </div>
       <nav className={style.Boards}>
-        {boardsArray.length === 0 && <p className={style.Empty}>No boards</p>}
+        {boardsArray.length === 0 && (
+          <Text size="medium" color="dark" align="center">
+            No boards
+          </Text>
+        )}
         {boardsArray.map((board) => (
           <Link to={`/board/${board.id}`} key={board.id} className={style.Link}>
             {board.title}

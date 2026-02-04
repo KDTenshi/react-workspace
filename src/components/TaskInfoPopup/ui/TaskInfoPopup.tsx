@@ -5,6 +5,8 @@ import Button from "../../../shared/ui/Button/Button";
 import type { TTaskPriority } from "../../../shared/types/types";
 import { deleteTask, editTask, setSelectedTaskID } from "../../../shared/store/tasksSlice";
 import { ConfirmPopup } from "../../ConfirmPopup";
+import Heading from "../../../shared/ui/Heading/Heading";
+import PopupWrapper from "../../../shared/ui/PopupWrapper/PopupWrapper";
 
 interface TaskInfoPopupProps {
   taskID: string;
@@ -64,14 +66,8 @@ const TaskInfoPopup: FC<TaskInfoPopupProps> = ({ taskID, boardID }) => {
     }
   };
 
-  const handleWrapperClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const target = e.target as HTMLElement;
-
-    if (target.classList.contains(style.Wrapper)) hidePopup();
-  };
-
   return (
-    <div className={style.Wrapper} onClick={handleWrapperClick}>
+    <PopupWrapper hidePopup={hidePopup}>
       {isDelete && (
         <ConfirmPopup
           question="Delete task?"
@@ -80,7 +76,9 @@ const TaskInfoPopup: FC<TaskInfoPopupProps> = ({ taskID, boardID }) => {
         />
       )}
       <div className={style.Popup}>
-        <h3 className={style.Title}>Task info</h3>
+        <Heading level={3} color="black">
+          Task info
+        </Heading>
         <form className={style.Form} onSubmit={handleSubmit}>
           <input
             type="text"
@@ -96,7 +94,9 @@ const TaskInfoPopup: FC<TaskInfoPopupProps> = ({ taskID, boardID }) => {
             onChange={(e) => setTaskBody(e.target.value)}
           ></textarea>
           <div className={style.Priorities}>
-            <h4 className={style.Subtitle}>Task priority</h4>
+            <Heading level={4} color="dark">
+              Task priority
+            </Heading>
             <div className={style.Picker}>
               <button type="button" className={getPriorityButtonClassName("low")} onClick={() => setPriority("low")}>
                 Low
@@ -128,7 +128,7 @@ const TaskInfoPopup: FC<TaskInfoPopupProps> = ({ taskID, boardID }) => {
           </div>
         </form>
       </div>
-    </div>
+    </PopupWrapper>
   );
 };
 

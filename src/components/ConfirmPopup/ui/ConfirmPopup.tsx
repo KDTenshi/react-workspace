@@ -1,6 +1,8 @@
 import type { FC } from "react";
 import style from "./ConfirmPopup.module.scss";
 import Button from "../../../shared/ui/Button/Button";
+import Heading from "../../../shared/ui/Heading/Heading";
+import PopupWrapper from "../../../shared/ui/PopupWrapper/PopupWrapper";
 
 interface ConfirmPopupProps {
   question: string;
@@ -9,18 +11,12 @@ interface ConfirmPopupProps {
 }
 
 const ConfirmPopup: FC<ConfirmPopupProps> = ({ question, handleConfirm, hidePopup }) => {
-  const handleWrapperClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const target = e.target as HTMLElement;
-
-    if (target.classList.contains(style.Wrapper)) {
-      hidePopup();
-    }
-  };
-
   return (
-    <div className={style.Wrapper} onClick={handleWrapperClick}>
+    <PopupWrapper hidePopup={hidePopup}>
       <div className={style.Popup}>
-        <h3 className={style.Title}>{question}</h3>
+        <Heading level={3} color="black">
+          {question}
+        </Heading>
         <div className={style.Buttons}>
           <Button size="big" onClick={hidePopup}>
             Cancel
@@ -30,7 +26,7 @@ const ConfirmPopup: FC<ConfirmPopupProps> = ({ question, handleConfirm, hidePopu
           </Button>
         </div>
       </div>
-    </div>
+    </PopupWrapper>
   );
 };
 

@@ -7,14 +7,9 @@
   padding: 15px 25px;
   border-radius: 10px;
   box-shadow: 0 0 15px c.$GRAY_LIGHT;
-}
-
-.Title {
-  @include t.heading_3();
-
-  color: c.$BLACK;
-  font-weight: 500;
-  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .Tasks {
@@ -29,11 +24,4 @@
   border-radius: 10px;
   scrollbar-width: thin;
   scrollbar-color: c.$GRAY_LIGHT c.$GRAY_WHITE;
-}
-
-.Empty {
-  @include t.body_1();
-
-  text-align: center;
-  color: c.$GRAY_DARK;
 }

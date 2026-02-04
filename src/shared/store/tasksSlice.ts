@@ -54,6 +54,8 @@ export const tasksSlice = createSlice({
         (id) => id !== taskID,
       );
       delete state.boards[boardID].tasks[taskID];
+
+      if (state.selectedTaskID === taskID) state.selectedTaskID = null;
     },
     setDraggingTaskID: (state, action: PayloadAction<{ taskID: string | null }>) => {
       const { taskID } = action.payload;
