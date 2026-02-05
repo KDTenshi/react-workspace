@@ -17,3 +17,5 @@ export type TBoard = {
   tasks: { [key: string]: TTask };
   columns: { [key in TColumnType]: string[] };
 };
+
+export type StylesUnion<T extends string | number> = { [key in T]: string };

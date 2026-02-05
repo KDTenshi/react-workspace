@@ -1,5 +1,6 @@
 import type { FC, PropsWithChildren } from "react";
 import style from "./Heading.module.scss";
+import type { StylesUnion } from "../../types/types";
 
 type HeadingLevel = 1 | 2 | 3 | 4;
 type HeadingColor = "black" | "dark";
@@ -9,12 +10,12 @@ interface HeadingProps {
   color?: HeadingColor;
 }
 
-const colorStyles: { [key in HeadingColor]: string } = {
+const colorStyles: StylesUnion<HeadingColor> = {
   black: style.Black,
   dark: style.Dark,
 };
 
-const levelStyles: { [key in HeadingLevel]: string } = {
+const levelStyles: StylesUnion<HeadingLevel> = {
   1: style.Heading_1,
   2: style.Heading_2,
   3: style.Heading_3,

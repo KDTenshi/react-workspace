@@ -1,5 +1,6 @@
 import type { FC, PropsWithChildren } from "react";
 import style from "./Text.module.scss";
+import type { StylesUnion } from "../../types/types";
 
 type TextSize = "big" | "medium" | "small";
 type TextColor = "black" | "dark";
@@ -11,18 +12,18 @@ interface TextProps {
   align?: TextAlign;
 }
 
-const sizeStyles: { [key in TextSize]: string } = {
+const sizeStyles: StylesUnion<TextSize> = {
   big: style.Big,
   medium: style.Medium,
   small: style.Small,
 };
 
-const colorStyles: { [key in TextColor]: string } = {
+const colorStyles: StylesUnion<TextColor> = {
   black: style.Black,
   dark: style.Dark,
 };
 
-const alignStyles: { [key in TextAlign]: string } = {
+const alignStyles: StylesUnion<TextAlign> = {
   left: style.Left,
   center: style.Center,
   right: style.Right,

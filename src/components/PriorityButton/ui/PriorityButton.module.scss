@@ -1,0 +1,31 @@
+@use "../../../shared/style/colors.scss" as c;
+@use "../../../shared/style/typography.scss" as t;
+
+@mixin priority($color) {
+  @include t.body_2();
+
+  background: rgba($color: $color, $alpha: 0.25);
+  border: 1px solid $color;
+  width: max-content;
+  text-transform: uppercase;
+  padding: 5px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: 0;
+
+  &.Active {
+    background: $color;
+  }
+}
+
+.Low {
+  @include priority(c.$GREEN_LIGHT);
+}
+
+.Moderate {
+  @include priority(c.$YELLOW_LIGHT);
+}
+
+.High {
+  @include priority(c.$RED_LIGHT);
+}

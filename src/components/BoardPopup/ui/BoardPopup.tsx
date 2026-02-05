@@ -6,6 +6,7 @@ import { hideBoardPopup } from "../../../shared/store/uiSlice";
 import { addBoard } from "../../../shared/store/tasksSlice";
 import Heading from "../../../shared/ui/Heading/Heading";
 import PopupWrapper from "../../../shared/ui/PopupWrapper/PopupWrapper";
+import Input from "../../../shared/ui/Input/Input";
 
 const BoardPopup: FC = () => {
   const dispatch = useAppDispatch();
@@ -30,10 +31,10 @@ const BoardPopup: FC = () => {
         <Heading level={3} color="black">
           Add new board
         </Heading>
-        <input
-          type="text"
+        <Input
+          placeholder="Board name..."
+          size="big"
           className={style.Input}
-          placeholder="Board name"
           value={boardTitle}
           onChange={(e) => setBoardTitle(e.target.value)}
         />

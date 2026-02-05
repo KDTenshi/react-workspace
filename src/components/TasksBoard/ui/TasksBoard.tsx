@@ -17,7 +17,6 @@ import {
   changeTaskColumn,
   changeTaskPosition,
   deleteBoard,
-  editBoard,
   setDraggingTaskID,
 } from "../../../shared/store/tasksSlice";
 import type { TColumnType } from "../../../shared/types/types";
@@ -26,6 +25,7 @@ import Button from "../../../shared/ui/Button/Button";
 import { ConfirmPopup } from "../../ConfirmPopup";
 import { useNavigate } from "react-router";
 import Heading from "../../../shared/ui/Heading/Heading";
+import Input from "../../../shared/ui/Input/Input";
 
 interface TasksBoardProps {
   boardID: string;
@@ -36,8 +36,6 @@ const TasksBoard: FC<TasksBoardProps> = ({ boardID }) => {
   const draggingTaskID = useAppSelector((state) => state.tasks.draggingTaskID);
   const board = useAppSelector((state) => state.tasks.boards[boardID]);
 
-  const [isBoardEdit, setIsBoardEdit] = useState(false);
-  const [editBoardValue, setEditBoardValue] = useState(board.title);
   const [isDeleting, setIsDeleting] = useState(false);
 
   const [titleValue, setTitleValue] = useState("");
@@ -98,18 +96,6 @@ const TasksBoard: FC<TasksBoardProps> = ({ boardID }) => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const title = editBoardValue.trim();
-
-    if (title) {
-      dispatch(editBoard({ boardID, title }));
-    }
-
-    setIsBoardEdit(false);
-  };
-
   const handleBoardDelete = () => {
     navigate("/", { replace: true });
     setTimeout(() => dispatch(deleteBoard({ boardID })), 10);
@@ -119,38 +105,20 @@ const TasksBoard: FC<TasksBoardProps> = ({ boardID }) => {
     <div className={style.Board}>
       <div className={style.Head}>
         <div className={style.Info}>
-          {!isBoardEdit && (
-            <Heading level={3} color="black">
-              {board.title}
-            </Heading>
-          )}
-          {isBoardEdit && (
-            <form className={style.Form} onSubmit={handleSubmit}>
-              <input
-                type="text"
-                value={editBoardValue}
-                onChange={(e) => setEditBoardValue(e.target.value)}
-                className={style.Input}
-                placeholder="Board title..."
-                autoFocus
-                onBlur={() => setIsBoardEdit(false)}
-              />
-            </form>
-          )}
+          <Heading level={3} color="black">
+            {board.title}
+          </Heading>
           <div className={style.Buttons}>
-            <Button size="big" onClick={() => setIsBoardEdit(true)}>
-              Edit
-            </Button>
+            <Button size="big">Edit</Button>
             <Button size="big" onClick={() => setIsDeleting(true)}>
               Delete
             </Button>
           </div>
         </div>
         <form className={style.TaskForm} onSubmit={handleAddTaskSubmit}>
-          <input
-            type="text"
+          <Input
             placeholder="Task title..."
-            className={style.TaskInput}
+            className={style.Input}
             value={titleValue}
             onChange={(e) => setTitleValue(e.target.value)}
           />

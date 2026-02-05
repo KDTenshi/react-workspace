@@ -11,15 +11,7 @@
 }
 
 .Input {
-  @include t.body_1();
-
   width: 35vw;
-  background: c.$GRAY_WHITE;
-  border: 1px solid c.$GRAY_LIGHT;
-  color: c.$GRAY_DARK;
-  padding: 5px 15px;
-  border-radius: 5px;
-  outline: 0;
 }
 
 .Buttons {

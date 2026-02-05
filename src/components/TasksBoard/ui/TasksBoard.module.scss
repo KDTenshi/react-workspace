@@ -30,27 +30,8 @@
   gap: 10px;
 }
 
-.TaskInput {
-  @include t.body_2();
-
-  color: c.$GRAY_DARK;
-  padding: 5px 15px;
-  border-radius: 5px;
-  border: 1px solid c.$GRAY_LIGHT;
-  background: c.$GRAY_WHITE;
-  width: 25vw;
-  outline: 0;
-}
-
 .Input {
-  @include t.heading_3();
-
   width: 25vw;
-  color: c.$BLACK;
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid c.$BLACK;
-  outline: 0;
 }
 
 .Buttons {

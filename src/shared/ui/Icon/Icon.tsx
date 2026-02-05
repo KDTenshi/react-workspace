@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import style from "./Icon.module.scss";
+import type { StylesUnion } from "../../types/types";
 
 type IconType = "delete" | "edit";
 type IconSize = "small" | "medium" | "large";
@@ -9,7 +10,7 @@ interface IconProps {
   size?: IconSize;
 }
 
-const sizeStyles: { [key in IconSize]: string } = {
+const sizeStyles: StylesUnion<IconSize> = {
   small: style.Small,
   medium: style.Medium,
   large: style.Large,

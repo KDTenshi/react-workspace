@@ -1,0 +1,9 @@
+@use "../../../shared/style/colors.scss" as c;
+@use "../../../shared/style/typography.scss" as t;
+
+.Picker {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+}

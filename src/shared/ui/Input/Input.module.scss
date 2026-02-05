@@ -1,0 +1,33 @@
+@use "../../style/colors.scss" as c;
+@use "../../style/typography.scss" as t;
+
+.Light {
+  background: c.$GRAY_WHITE;
+  border: 1px solid c.$GRAY_LIGHT;
+  border-radius: 5px;
+  color: c.$GRAY_DARK;
+  outline: 0;
+
+  &::selection {
+    background: c.$GRAY_DARK;
+    color: c.$GRAY_WHITE;
+  }
+}
+
+.Big {
+  @include t.body_1();
+
+  padding: 5px 15px;
+}
+
+.Medium {
+  @include t.body_2();
+
+  padding: 5px 10px;
+}
+
+.Small {
+  @include t.body_3();
+
+  padding: 5px;
+}

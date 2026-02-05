@@ -7,6 +7,9 @@ import { deleteTask, editTask, setSelectedTaskID } from "../../../shared/store/t
 import { ConfirmPopup } from "../../ConfirmPopup";
 import Heading from "../../../shared/ui/Heading/Heading";
 import PopupWrapper from "../../../shared/ui/PopupWrapper/PopupWrapper";
+import Input from "../../../shared/ui/Input/Input";
+import Textarea from "../../../shared/ui/Textarea/Textarea";
+import { PriorityPicker } from "../../PriorityPicker";
 
 interface TaskInfoPopupProps {
   taskID: string;
@@ -23,32 +26,6 @@ const TaskInfoPopup: FC<TaskInfoPopupProps> = ({ taskID, boardID }) => {
   const [isDelete, setIsDelete] = useState(false);
 
   const dispatch = useAppDispatch();
-
-  const getPriorityButtonClassName = (buttonTitle: TTaskPriority) => {
-    if (buttonTitle === "low") {
-      if (priority === "low") {
-        return [style.Low, style.Active].join(" ");
-      } else {
-        return style.Low;
-      }
-    }
-
-    if (buttonTitle === "moderate") {
-      if (priority === "moderate") {
-        return [style.Moderate, style.Active].join(" ");
-      } else {
-        return style.Moderate;
-      }
-    }
-
-    if (buttonTitle === "high") {
-      if (priority === "high") {
-        return [style.High, style.Active].join(" ");
-      } else {
-        return style.High;
-      }
-    }
-  };
 
   const hidePopup = () => {
     dispatch(setSelectedTaskID({ taskID: null }));
@@ -80,38 +57,23 @@ const TaskInfoPopup: FC<TaskInfoPopupProps> = ({ taskID, boardID }) => {
           Task info
         </Heading>
         <form className={style.Form} onSubmit={handleSubmit}>
-          <input
-            type="text"
-            className={style.Input}
+          <Input
+            size="big"
             placeholder="Task title..."
             value={taskTitle}
             onChange={(e) => setTaskTitle(e.target.value)}
           />
-          <textarea
-            className={style.Textarea}
+          <Textarea
+            size="big"
             placeholder="Task body..."
             value={taskBody}
             onChange={(e) => setTaskBody(e.target.value)}
-          ></textarea>
+          ></Textarea>
           <div className={style.Priorities}>
             <Heading level={4} color="dark">
               Task priority
             </Heading>
-            <div className={style.Picker}>
-              <button type="button" className={getPriorityButtonClassName("low")} onClick={() => setPriority("low")}>
-                Low
-              </button>
-              <button
-                type="button"
-                className={getPriorityButtonClassName("moderate")}
-                onClick={() => setPriority("moderate")}
-              >
-                Moderate
-              </button>
-              <button type="button" className={getPriorityButtonClassName("high")} onClick={() => setPriority("high")}>
-                High
-              </button>
-            </div>
+            <PriorityPicker priority={priority} setPriority={setPriority} />
           </div>
           <div className={style.Controls}>
             <Button size="big" type="button" onClick={() => setIsDelete(true)}>
