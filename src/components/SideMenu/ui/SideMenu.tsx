@@ -19,9 +19,11 @@ const SideMenu: FC = () => {
   return (
     <div className={style.Menu}>
       <div className={style.Head}>
-        <Text size="big" color="dark">
-          Your boards
-        </Text>
+        <Link to={"/boards"} className={style.Link}>
+          <Text size="big" color="dark">
+            Your boards
+          </Text>
+        </Link>
         <Button size={"medium"} onClick={handleAddBoardClick}>
           Add
         </Button>
@@ -33,7 +35,7 @@ const SideMenu: FC = () => {
           </Text>
         )}
         {boardsArray.map((board) => (
-          <Link to={`/board/${board.id}`} key={board.id} className={style.Link}>
+          <Link to={`/boards/${board.id}`} key={board.id} className={style.Board}>
             {board.title}
           </Link>
         ))}

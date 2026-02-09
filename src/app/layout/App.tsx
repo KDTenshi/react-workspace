@@ -6,6 +6,7 @@ import { BoardPage } from "../../pages/BoardPage";
 import { SideMenu } from "../../components/SideMenu";
 import { BoardPopup } from "../../components/BoardPopup";
 import { useAppSelector } from "../store/appStore";
+import BoardsPage from "../../pages/BoardsPage/ui/BoardsPage";
 
 const App: FC = () => {
   const isBoardPopupShown = useAppSelector((state) => state.ui.isBoardPopupShown);
@@ -18,7 +19,8 @@ const App: FC = () => {
           <SideMenu />
           <Routes>
             <Route path="/" element={<div className="Home">Home Page</div>} />
-            <Route path="/board/:boardID" element={<BoardPage />} />
+            <Route path="/boards" element={<BoardsPage />} />
+            <Route path="/boards/:boardID" element={<BoardPage />} />
           </Routes>
         </div>
         {isBoardPopupShown && <BoardPopup />}

@@ -30,6 +30,10 @@
 }
 
 .Link {
+  text-decoration: none;
+}
+
+.Board {
   @include t.body_2();
 
   color: c.$GRAY_DARK;

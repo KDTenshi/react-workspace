@@ -1,0 +1,11 @@
+@use "../../../shared/style/colors.scss" as c;
+
+.Page {
+  width: 100%;
+  height: 100%;
+  background: c.$WHITE;
+  padding: 50px 75px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}

@@ -1,0 +1,24 @@
+@use "../../../shared/style/colors.scss" as c;
+@use "../../../shared/style/typography.scss" as t;
+
+.List {
+  width: 100%;
+  padding: 15px 25px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.Link {
+  text-decoration: none;
+  background: c.$WHITE;
+  border: 1px solid c.$WHITE;
+  transition: all 0.25s;
+  padding: 10px 15px;
+  border-radius: 5px;
+
+  &:hover {
+    background: c.$GRAY_WHITE;
+    border-color: c.$GRAY_LIGHT;
+  }
+}
