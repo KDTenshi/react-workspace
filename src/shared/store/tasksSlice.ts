@@ -6,12 +6,14 @@ type TasksState = {
   draggingTaskID: string | null;
   selectedTaskID: string | null;
   boards: { [key: string]: TBoard };
+  recentBoards: string[];
 };
 
 const initialState: TasksState = {
   draggingTaskID: null,
   selectedTaskID: null,
   boards: {},
+  recentBoards: [],
 };
 
 export const tasksSlice = createSlice({
@@ -100,12 +102,13 @@ export const tasksSlice = createSlice({
         overTaskIndex,
       );
     },
-    addBoard: (state, action: PayloadAction<{ title: string }>) => {
-      const { title } = action.payload;
+    addBoard: (state, action: PayloadAction<{ title: string; description: string }>) => {
+      const { title, description } = action.payload;
 
       const newBoard: TBoard = {
         id: nanoid(),
         title,
+        description,
         tasks: {},
         columns: {
           todo: [],
@@ -126,6 +129,18 @@ export const tasksSlice = createSlice({
 
       delete state.boards[boardID];
     },
+    addRecentBoard: (state, action: PayloadAction<{ boardID: string }>) => {
+      const { boardID } = action.payload;
+
+      if (state.recentBoards.includes(boardID)) {
+        const position = state.recentBoards.findIndex((id) => id === boardID);
+        state.recentBoards = arrayMove(state.recentBoards, position, 0);
+      } else {
+        state.recentBoards = [boardID, ...state.recentBoards];
+      }
+
+      if (state.recentBoards.length > 4) state.recentBoards.pop();
+    },
   },
 });
 
@@ -140,4 +155,5 @@ export const {
   addBoard,
   editBoard,
   deleteBoard,
+  addRecentBoard,
 } = tasksSlice.actions;

@@ -13,6 +13,7 @@ import {
 } from "@dnd-kit/core";
 import { useAppDispatch, useAppSelector } from "../../../app/store/appStore";
 import {
+  addRecentBoard,
   addTask,
   changeTaskColumn,
   changeTaskPosition,
@@ -23,9 +24,10 @@ import type { TColumnType } from "../../../shared/types/types";
 import { TaskCard } from "../../TaskCard";
 import Button from "../../../shared/ui/Button/Button";
 import { ConfirmPopup } from "../../ConfirmPopup";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Heading from "../../../shared/ui/Heading/Heading";
 import Input from "../../../shared/ui/Input/Input";
+import Text from "../../../shared/ui/Text/Text";
 
 interface TasksBoardProps {
   boardID: string;
@@ -35,6 +37,8 @@ const TasksBoard: FC<TasksBoardProps> = ({ boardID }) => {
   const dispatch = useAppDispatch();
   const draggingTaskID = useAppSelector((state) => state.tasks.draggingTaskID);
   const board = useAppSelector((state) => state.tasks.boards[boardID]);
+
+  dispatch(addRecentBoard({ boardID }));
 
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -109,6 +113,11 @@ const TasksBoard: FC<TasksBoardProps> = ({ boardID }) => {
             {board.title}
           </Heading>
           <div className={style.Buttons}>
+            <Link className={style.Link} to={"info"}>
+              <Text size="big" color="dark">
+                Info
+              </Text>
+            </Link>
             <Button size="big">Edit</Button>
             <Button size="big" onClick={() => setIsDeleting(true)}>
               Delete

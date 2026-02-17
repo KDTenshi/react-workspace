@@ -1,0 +1,12 @@
+@use "../../../shared/style/colors.scss" as c;
+@use "../../../shared/style/typography.scss" as t;
+
+.Page {
+  width: 100%;
+  height: 100%;
+  background: c.$GRAY_WHITE;
+  padding: 50px 75px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}

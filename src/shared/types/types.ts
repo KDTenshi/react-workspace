@@ -14,6 +14,7 @@ export type TTask = {
 export type TBoard = {
   id: string;
   title: string;
+  description: string;
   tasks: { [key: string]: TTask };
   columns: { [key in TColumnType]: string[] };
 };

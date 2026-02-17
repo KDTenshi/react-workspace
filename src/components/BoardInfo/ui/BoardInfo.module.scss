@@ -1,0 +1,16 @@
+@use "../../../shared/style/colors.scss" as c;
+@use "../../../shared/style/typography.scss" as t;
+
+.Info {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 50px 75px;
+  background: c.$WHITE;
+  gap: 15px;
+}
+
+.Link {
+  text-decoration: none;
+}

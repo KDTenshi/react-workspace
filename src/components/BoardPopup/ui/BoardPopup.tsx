@@ -7,11 +7,13 @@ import { addBoard } from "../../../shared/store/tasksSlice";
 import Heading from "../../../shared/ui/Heading/Heading";
 import PopupWrapper from "../../../shared/ui/PopupWrapper/PopupWrapper";
 import Input from "../../../shared/ui/Input/Input";
+import Textarea from "../../../shared/ui/Textarea/Textarea";
 
 const BoardPopup: FC = () => {
   const dispatch = useAppDispatch();
 
   const [boardTitle, setBoardTitle] = useState("");
+  const [description, setDescriprion] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -19,7 +21,7 @@ const BoardPopup: FC = () => {
     const title = boardTitle.trim();
 
     if (title) {
-      dispatch(addBoard({ title }));
+      dispatch(addBoard({ title, description }));
     }
 
     dispatch(hideBoardPopup());
@@ -38,6 +40,12 @@ const BoardPopup: FC = () => {
           value={boardTitle}
           onChange={(e) => setBoardTitle(e.target.value)}
         />
+        <Textarea
+          placeholder="Board descriprion..."
+          size="big"
+          value={description}
+          onChange={(e) => setDescriprion(e.target.value)}
+        ></Textarea>
         <div className={style.Buttons}>
           <Button size={"big"} type="button" onClick={() => dispatch(hideBoardPopup())}>
             Cancel

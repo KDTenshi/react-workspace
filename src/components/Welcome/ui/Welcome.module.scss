@@ -1,0 +1,12 @@
+@use "../../../shared/style/colors.scss" as c;
+@use "../../../shared/style/typography.scss" as t;
+
+.Welcome {
+  background: c.$WHITE;
+  border: 1px solid c.$GRAY_LIGHT;
+  padding: 25px 50px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
