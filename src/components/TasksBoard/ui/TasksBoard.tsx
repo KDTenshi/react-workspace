@@ -17,17 +17,15 @@ import {
   addTask,
   changeTaskColumn,
   changeTaskPosition,
-  deleteBoard,
   setDraggingTaskID,
 } from "../../../shared/store/tasksSlice";
 import type { TColumnType } from "../../../shared/types/types";
 import { TaskCard } from "../../TaskCard";
-import Button from "../../../shared/ui/Button/Button";
-import { ConfirmPopup } from "../../ConfirmPopup";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import Heading from "../../../shared/ui/Heading/Heading";
 import Input from "../../../shared/ui/Input/Input";
 import Text from "../../../shared/ui/Text/Text";
+import Button from "../../../shared/ui/Button/Button";
 
 interface TasksBoardProps {
   boardID: string;
@@ -40,11 +38,7 @@ const TasksBoard: FC<TasksBoardProps> = ({ boardID }) => {
 
   dispatch(addRecentBoard({ boardID }));
 
-  const [isDeleting, setIsDeleting] = useState(false);
-
   const [titleValue, setTitleValue] = useState("");
-
-  const navigate = useNavigate();
 
   const handleDragStart = (e: DragStartEvent) => {
     const taskID = e.active.id as string;
@@ -100,11 +94,6 @@ const TasksBoard: FC<TasksBoardProps> = ({ boardID }) => {
     }
   };
 
-  const handleBoardDelete = () => {
-    navigate("/", { replace: true });
-    setTimeout(() => dispatch(deleteBoard({ boardID })), 10);
-  };
-
   return (
     <div className={style.Board}>
       <div className={style.Head}>
@@ -112,26 +101,23 @@ const TasksBoard: FC<TasksBoardProps> = ({ boardID }) => {
           <Heading level={3} color="black">
             {board.title}
           </Heading>
-          <div className={style.Buttons}>
-            <Link className={style.Link} to={"info"}>
-              <Text size="big" color="dark">
-                Info
-              </Text>
-            </Link>
-            <Button size="big">Edit</Button>
-            <Button size="big" onClick={() => setIsDeleting(true)}>
-              Delete
-            </Button>
-          </div>
+          <Link to={"info"} className={style.Link}>
+            <Text size="big" color="dark">
+              Details
+            </Text>
+          </Link>
         </div>
-        <form className={style.TaskForm} onSubmit={handleAddTaskSubmit}>
+        <form className={style.Form} onSubmit={handleAddTaskSubmit}>
           <Input
+            size="medium"
             placeholder="Task title..."
             className={style.Input}
             value={titleValue}
             onChange={(e) => setTitleValue(e.target.value)}
           />
-          <Button size="medium">Add task</Button>
+          <Button color="dark" size="medium">
+            Add task
+          </Button>
         </form>
       </div>
       <div className={style.Columns}>
@@ -147,13 +133,6 @@ const TasksBoard: FC<TasksBoardProps> = ({ boardID }) => {
           <TasksColumn type={"done"} boardID={boardID} />
           <DragOverlay>{draggingTaskID && <TaskCard taskID={draggingTaskID} boardID={boardID} />}</DragOverlay>
         </DndContext>
-        {isDeleting && (
-          <ConfirmPopup
-            question="Delete board?"
-            handleConfirm={handleBoardDelete}
-            hidePopup={() => setIsDeleting(false)}
-          />
-        )}
       </div>
     </div>
   );

@@ -6,11 +6,48 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 50px 75px;
-  background: c.$WHITE;
-  gap: 15px;
+  gap: 25px;
 }
 
 .Link {
   text-decoration: none;
+}
+
+.Head {
+  background: c.$WHITE;
+  border-bottom: 1px solid c.$GRAY_LIGHT;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 25px;
+}
+
+.Controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.Content {
+  background: c.$WHITE;
+  min-height: 250px;
+  border: 1px solid c.$GRAY_LIGHT;
+  border-radius: 10px;
+  width: 75%;
+  margin: 0 auto;
+  padding: 25px 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.Form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.Button {
+  width: max-content;
 }

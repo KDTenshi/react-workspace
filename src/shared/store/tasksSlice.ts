@@ -119,15 +119,20 @@ export const tasksSlice = createSlice({
 
       state.boards[newBoard.id] = newBoard;
     },
-    editBoard: (state, action: PayloadAction<{ boardID: string; title: string }>) => {
-      const { boardID, title } = action.payload;
+    editBoard: (state, action: PayloadAction<{ boardID: string; title: string; description: string }>) => {
+      const { boardID, title, description } = action.payload;
 
       state.boards[boardID].title = title;
+      state.boards[boardID].description = description;
     },
     deleteBoard: (state, acton: PayloadAction<{ boardID: string }>) => {
       const { boardID } = acton.payload;
 
       delete state.boards[boardID];
+
+      if (state.recentBoards.includes(boardID)) {
+        state.recentBoards = state.recentBoards.filter((id) => id !== boardID);
+      }
     },
     addRecentBoard: (state, action: PayloadAction<{ boardID: string }>) => {
       const { boardID } = action.payload;
