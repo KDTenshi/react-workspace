@@ -1,0 +1,43 @@
+@use "../../../shared/style/colors.scss" as c;
+@use "../../../shared/style/typography.scss" as t;
+
+.Head {
+  background: c.$WHITE;
+  border-bottom: 1px solid c.$GRAY_LIGHT;
+}
+
+.Info {
+  padding: 15px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid c.$GRAY_LIGHT;
+}
+
+.Controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 15px 25px;
+}
+
+.Links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.Link {
+  text-decoration: none;
+  border: 1px solid c.$WHITE;
+  padding: 5px 15px;
+  border-radius: 5px;
+  transition: all 0.25s;
+
+  &:hover {
+    background: c.$GRAY_WHITE;
+    border-color: c.$GRAY_LIGHT;
+  }
+}

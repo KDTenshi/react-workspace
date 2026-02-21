@@ -1,4 +1,4 @@
-import { useState, type FC } from "react";
+import { type FC } from "react";
 import style from "./TasksBoard.module.scss";
 import { TasksColumn } from "../../TasksColumn";
 import {
@@ -14,18 +14,13 @@ import {
 import { useAppDispatch, useAppSelector } from "../../../app/store/appStore";
 import {
   addRecentBoard,
-  addTask,
   changeTaskColumn,
   changeTaskPosition,
   setDraggingTaskID,
 } from "../../../shared/store/tasksSlice";
 import type { TColumnType } from "../../../shared/types/types";
 import { TaskCard } from "../../TaskCard";
-import { Link } from "react-router";
-import Heading from "../../../shared/ui/Heading/Heading";
-import Input from "../../../shared/ui/Input/Input";
-import Text from "../../../shared/ui/Text/Text";
-import Button from "../../../shared/ui/Button/Button";
+import { BoardHead } from "../../BoardHead";
 
 interface TasksBoardProps {
   boardID: string;
@@ -37,8 +32,6 @@ const TasksBoard: FC<TasksBoardProps> = ({ boardID }) => {
   const board = useAppSelector((state) => state.tasks.boards[boardID]);
 
   dispatch(addRecentBoard({ boardID }));
-
-  const [titleValue, setTitleValue] = useState("");
 
   const handleDragStart = (e: DragStartEvent) => {
     const taskID = e.active.id as string;
@@ -83,43 +76,9 @@ const TasksBoard: FC<TasksBoardProps> = ({ boardID }) => {
     dispatch(setDraggingTaskID({ taskID: null }));
   };
 
-  const handleAddTaskSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const title = titleValue.trim();
-
-    if (title) {
-      dispatch(addTask({ title, boardID }));
-      setTitleValue("");
-    }
-  };
-
   return (
     <div className={style.Board}>
-      <div className={style.Head}>
-        <div className={style.Info}>
-          <Heading level={3} color="black">
-            {board.title}
-          </Heading>
-          <Link to={"info"} className={style.Link}>
-            <Text size="big" color="dark">
-              Details
-            </Text>
-          </Link>
-        </div>
-        <form className={style.Form} onSubmit={handleAddTaskSubmit}>
-          <Input
-            size="medium"
-            placeholder="Task title..."
-            className={style.Input}
-            value={titleValue}
-            onChange={(e) => setTitleValue(e.target.value)}
-          />
-          <Button color="dark" size="medium">
-            Add task
-          </Button>
-        </form>
-      </div>
+      <BoardHead board={board} page="tasks" />
       <div className={style.Columns}>
         <DndContext
           sensors={sensors}
